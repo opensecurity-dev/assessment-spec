@@ -205,6 +205,14 @@ seven artifacts, fifteen control records and an illustrative crosswalk. It
 includes every system's view and resolution for every audience, plus
 coverage and OSCAL exports.
 
+## Documentation
+
+- [Format reference](docs/format.md)
+- [Adopting it as a collector](docs/collectors.md)
+- [Adopting it as an engine](docs/engines.md)
+- [Walkthrough: two products on one platform](docs/walkthrough.md)
+- [Sources and licensing](docs/licensing.md)
+
 ## Specifications
 
 - [PRD](docs/specs/initiatives/INIT-ASSESSMENTSPEC-001/PRD.md)
