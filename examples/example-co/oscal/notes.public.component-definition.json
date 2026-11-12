@@ -1,0 +1,526 @@
+{
+  "component-definition": {
+    "components": [
+      {
+        "control-implementations": [
+          {
+            "description": "Controls recorded for Notes.",
+            "implemented-requirements": [
+              {
+                "control-id": "ac-2",
+                "description": "Family administrators manage their own family's accounts.",
+                "props": [
+                  {
+                    "name": "origination",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "hybrid"
+                  },
+                  {
+                    "name": "implementation-status",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "partial"
+                  },
+                  {
+                    "name": "effective-status",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "partial"
+                  },
+                  {
+                    "name": "inherits-from",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "shared-hosting"
+                  },
+                  {
+                    "name": "verification",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "unverified"
+                  }
+                ],
+                "remarks": "Gap: A periodic review of family administrator accounts is not yet scheduled.",
+                "uuid": "35a95fee-1b8a-5700-b0c6-0b661ab1ddde"
+              },
+              {
+                "control-id": "ia-2",
+                "description": "Sign-in goes through the organization's OIDC service, with multi-factor authentication for administrators.",
+                "props": [
+                  {
+                    "name": "origination",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "system-specific"
+                  },
+                  {
+                    "name": "implementation-status",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "implemented"
+                  },
+                  {
+                    "name": "verification",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "unverified"
+                  }
+                ],
+                "uuid": "3a969940-a07d-5332-8bf6-3f5dcd0a934d"
+              },
+              {
+                "control-id": "pt-2",
+                "description": "Notes processes a child's data only with a parent's consent.",
+                "props": [
+                  {
+                    "name": "origination",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "system-specific"
+                  },
+                  {
+                    "name": "implementation-status",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "implemented"
+                  },
+                  {
+                    "name": "verification",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "unverified"
+                  }
+                ],
+                "uuid": "dcc5cb1b-2909-515f-a8b4-fb2b082d0e2f"
+              },
+              {
+                "control-id": "pt-3",
+                "description": "Withheld for this audience.",
+                "props": [
+                  {
+                    "name": "origination",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "system-specific"
+                  },
+                  {
+                    "name": "implementation-status",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "partial"
+                  },
+                  {
+                    "name": "verification",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "unverified"
+                  },
+                  {
+                    "name": "prose-withheld",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "visibility"
+                  }
+                ],
+                "uuid": "00134526-13bd-556f-b20a-a5f1b7f328fd"
+              },
+              {
+                "control-id": "ra-5",
+                "description": "The Notes release is scanned in source and binary mode, with a VEX statement for each unreachable vulnerability.",
+                "links": [
+                  {
+                    "href": "notes-govulncheck.manifest.json",
+                    "media-type": "application/json",
+                    "rel": "evidence"
+                  }
+                ],
+                "props": [
+                  {
+                    "name": "origination",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "hybrid"
+                  },
+                  {
+                    "name": "implementation-status",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "implemented"
+                  },
+                  {
+                    "name": "effective-status",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "partial"
+                  },
+                  {
+                    "name": "inherits-from",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "shared-hosting"
+                  },
+                  {
+                    "name": "verification",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "unverified"
+                  }
+                ],
+                "uuid": "d9174f8d-6a13-50e1-a5b2-66c9b378918a"
+              }
+            ],
+            "source": "https://example.test/profiles/sp800-53-low/profile.json",
+            "uuid": "127a9de5-4ce9-5d1f-a8b5-aaf313a329b6"
+          }
+        ],
+        "description": "A note-taking service for families.",
+        "props": [
+          {
+            "name": "scope-kind",
+            "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+            "value": "system"
+          },
+          {
+            "name": "scope-id",
+            "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+            "value": "notes"
+          }
+        ],
+        "title": "Notes",
+        "type": "service",
+        "uuid": "d9398052-5e6c-5c52-bc61-76a68611d52d"
+      },
+      {
+        "control-implementations": [
+          {
+            "description": "Controls recorded for Shared hosting platform.",
+            "implemented-requirements": [
+              {
+                "control-id": "ac-2",
+                "description": "Operator accounts are individual and reviewed each quarter.",
+                "props": [
+                  {
+                    "name": "origination",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "system-specific"
+                  },
+                  {
+                    "name": "implementation-status",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "implemented"
+                  },
+                  {
+                    "name": "verification",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "unverified"
+                  }
+                ],
+                "uuid": "7be30797-b502-5555-9517-48cbcb95a022"
+              },
+              {
+                "control-id": "cm-6",
+                "description": "Withheld for this audience.",
+                "props": [
+                  {
+                    "name": "origination",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "system-specific"
+                  },
+                  {
+                    "name": "implementation-status",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "planned"
+                  },
+                  {
+                    "name": "verification",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "unverified"
+                  },
+                  {
+                    "name": "prose-withheld",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "visibility"
+                  }
+                ],
+                "uuid": "9de82585-2c7d-5633-9ea4-3cc5f2fb48fa"
+              },
+              {
+                "control-id": "cp-9",
+                "description": "Database backups are the managed database service's automated backups.",
+                "props": [
+                  {
+                    "name": "origination",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "inherited"
+                  },
+                  {
+                    "name": "inherits-from",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "example-cloud"
+                  },
+                  {
+                    "name": "verification",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "reviewed"
+                  }
+                ],
+                "uuid": "b32d0643-26f3-561e-8387-88471b7b86c8"
+              },
+              {
+                "control-id": "ra-5",
+                "description": "Withheld for this audience.",
+                "links": [
+                  {
+                    "href": "platform-benchmark.manifest.json",
+                    "media-type": "application/json",
+                    "rel": "evidence"
+                  }
+                ],
+                "props": [
+                  {
+                    "name": "origination",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "system-specific"
+                  },
+                  {
+                    "name": "implementation-status",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "partial"
+                  },
+                  {
+                    "name": "verification",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "unverified"
+                  },
+                  {
+                    "name": "prose-withheld",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "visibility"
+                  }
+                ],
+                "uuid": "d0d1801f-9066-502d-9b4f-26e93ea0b4a3"
+              },
+              {
+                "control-id": "sc-7",
+                "description": "Web traffic reaches the server only through the CDN, whose address ranges are the only ones the firewall admits on the web port.",
+                "links": [
+                  {
+                    "href": "platform-benchmark.manifest.json",
+                    "media-type": "application/json",
+                    "rel": "evidence"
+                  }
+                ],
+                "props": [
+                  {
+                    "name": "origination",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "system-specific"
+                  },
+                  {
+                    "name": "implementation-status",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "implemented"
+                  },
+                  {
+                    "name": "verification",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "unverified"
+                  }
+                ],
+                "uuid": "8f060786-5d14-5bfe-9b1e-af0abe0c75c8"
+              },
+              {
+                "control-id": "sc-8",
+                "description": "Withheld for this audience.",
+                "props": [
+                  {
+                    "name": "origination",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "system-specific"
+                  },
+                  {
+                    "name": "implementation-status",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "implemented"
+                  },
+                  {
+                    "name": "verification",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "unverified"
+                  },
+                  {
+                    "name": "prose-withheld",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "names-other-systems"
+                  }
+                ],
+                "uuid": "e1c2d29a-37e6-5e85-b914-aedec741cdea"
+              },
+              {
+                "control-id": "si-2",
+                "description": "The host applies security updates automatically, and a release is rebuilt when a reachable vulnerability is fixed.",
+                "links": [
+                  {
+                    "href": "platform-benchmark.manifest.json",
+                    "media-type": "application/json",
+                    "rel": "evidence"
+                  }
+                ],
+                "props": [
+                  {
+                    "name": "origination",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "system-specific"
+                  },
+                  {
+                    "name": "implementation-status",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "implemented"
+                  },
+                  {
+                    "name": "verification",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "verified"
+                  }
+                ],
+                "uuid": "171c4558-2e40-5b5d-b50f-d0ad3711d876"
+              }
+            ],
+            "source": "https://example.test/profiles/sp800-53-low/profile.json",
+            "uuid": "8ee4062b-46a5-505c-b69f-48f7d5a50a09"
+          }
+        ],
+        "description": "One virtual machine behind a CDN, a reverse proxy, a managed database server and the release pipeline, operated by Example Co. for its own products.",
+        "props": [
+          {
+            "name": "scope-kind",
+            "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+            "value": "platform"
+          },
+          {
+            "name": "scope-id",
+            "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+            "value": "shared-hosting"
+          }
+        ],
+        "title": "Shared hosting platform",
+        "type": "service",
+        "uuid": "8d5752e9-b339-53b0-b981-8777e69db6f4"
+      },
+      {
+        "control-implementations": [
+          {
+            "description": "Controls recorded for Example Cloud.",
+            "implemented-requirements": [
+              {
+                "control-id": "cp-9",
+                "description": "The managed database service takes daily backups and keeps them for seven days.",
+                "props": [
+                  {
+                    "name": "origination",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "system-specific"
+                  },
+                  {
+                    "name": "implementation-status",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "implemented"
+                  },
+                  {
+                    "name": "verification",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "reviewed"
+                  }
+                ],
+                "uuid": "158f6dc5-ccc4-5863-a6ad-04e57813f320"
+              },
+              {
+                "control-id": "pe-3",
+                "description": "Physical access to the data centres is controlled by Example Cloud.",
+                "props": [
+                  {
+                    "name": "origination",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "system-specific"
+                  },
+                  {
+                    "name": "implementation-status",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "implemented"
+                  },
+                  {
+                    "name": "verification",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "reviewed"
+                  }
+                ],
+                "uuid": "41cfacbd-8031-5404-ba24-2938bd941027"
+              }
+            ],
+            "source": "https://example.test/profiles/sp800-53-low/profile.json",
+            "uuid": "5c9be98c-0d65-5293-855c-4bfc4f526542"
+          }
+        ],
+        "description": "Example Cloud, an infrastructure provider.",
+        "props": [
+          {
+            "name": "scope-kind",
+            "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+            "value": "provider"
+          },
+          {
+            "name": "scope-id",
+            "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+            "value": "example-cloud"
+          },
+          {
+            "name": "provider-attestation",
+            "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+            "value": "SOC 2 Type II report, available under NDA"
+          }
+        ],
+        "title": "Example Cloud",
+        "type": "service",
+        "uuid": "9f516721-b030-5511-bd9e-7d1ce87a816b"
+      },
+      {
+        "description": "Example CDN, a content delivery network.",
+        "props": [
+          {
+            "name": "scope-kind",
+            "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+            "value": "provider"
+          },
+          {
+            "name": "scope-id",
+            "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+            "value": "example-cdn"
+          }
+        ],
+        "title": "Example CDN",
+        "type": "service",
+        "uuid": "e76a3a10-87e3-54e9-9266-3c505cf5dcbd"
+      },
+      {
+        "description": "Example Git Host, a code host.",
+        "props": [
+          {
+            "name": "scope-kind",
+            "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+            "value": "provider"
+          },
+          {
+            "name": "scope-id",
+            "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+            "value": "example-git"
+          }
+        ],
+        "title": "Example Git Host",
+        "type": "service",
+        "uuid": "eab29db8-6525-5231-8bcf-8daff90f8380"
+      }
+    ],
+    "metadata": {
+      "last-modified": "2026-02-01T06:00:00Z",
+      "oscal-version": "1.2.3",
+      "parties": [
+        {
+          "name": "Example Co.",
+          "type": "organization",
+          "uuid": "12e37acc-31ea-5931-a758-7286a42edd26"
+        }
+      ],
+      "props": [
+        {
+          "name": "audience",
+          "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+          "value": "public"
+        }
+      ],
+      "title": "Notes component definition (public)",
+      "version": "0.1.0"
+    },
+    "uuid": "247d2ca7-feae-52b8-b895-66ceced98913"
+  }
+}

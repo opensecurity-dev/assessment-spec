@@ -1,0 +1,405 @@
+{
+  "component-definition": {
+    "components": [
+      {
+        "control-implementations": [
+          {
+            "description": "Controls recorded for Ledger.",
+            "implemented-requirements": [
+              {
+                "control-id": "ia-2",
+                "description": "No statement recorded.",
+                "props": [
+                  {
+                    "name": "origination",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "system-specific"
+                  },
+                  {
+                    "name": "implementation-status",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "planned"
+                  },
+                  {
+                    "name": "verification",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "unverified"
+                  }
+                ],
+                "remarks": "Gap: Multi-factor authentication for administrators is planned.",
+                "uuid": "ede13f6d-b303-51c5-a5c5-f48d4492b49d"
+              }
+            ],
+            "source": "https://example.test/profiles/sp800-53-low/profile.json",
+            "uuid": "df74e3bb-131f-52ef-816c-6ec0b78e764a"
+          }
+        ],
+        "description": "A bookkeeping service for small businesses.",
+        "props": [
+          {
+            "name": "scope-kind",
+            "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+            "value": "system"
+          },
+          {
+            "name": "scope-id",
+            "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+            "value": "ledger"
+          }
+        ],
+        "title": "Ledger",
+        "type": "service",
+        "uuid": "a76cd49a-d348-5897-a013-333caed15e78"
+      },
+      {
+        "control-implementations": [
+          {
+            "description": "Controls recorded for Shared hosting platform.",
+            "implemented-requirements": [
+              {
+                "control-id": "ac-2",
+                "description": "Operator accounts are individual and reviewed each quarter.",
+                "props": [
+                  {
+                    "name": "origination",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "system-specific"
+                  },
+                  {
+                    "name": "implementation-status",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "implemented"
+                  },
+                  {
+                    "name": "verification",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "unverified"
+                  }
+                ],
+                "uuid": "7be30797-b502-5555-9517-48cbcb95a022"
+              },
+              {
+                "control-id": "cm-6",
+                "description": "No statement recorded.",
+                "links": [
+                  {
+                    "href": "platform-host-scan.manifest.json",
+                    "media-type": "application/json",
+                    "rel": "evidence"
+                  }
+                ],
+                "props": [
+                  {
+                    "name": "origination",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "system-specific"
+                  },
+                  {
+                    "name": "implementation-status",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "planned"
+                  },
+                  {
+                    "name": "verification",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "unverified"
+                  }
+                ],
+                "remarks": "Gap: The CIS host profile is not yet applied; the first scan lists nine failures.",
+                "uuid": "9de82585-2c7d-5633-9ea4-3cc5f2fb48fa"
+              },
+              {
+                "control-id": "cp-9",
+                "description": "Database backups are the managed database service's automated backups.",
+                "props": [
+                  {
+                    "name": "origination",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "inherited"
+                  },
+                  {
+                    "name": "inherits-from",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "example-cloud"
+                  },
+                  {
+                    "name": "verification",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "reviewed"
+                  }
+                ],
+                "uuid": "b32d0643-26f3-561e-8387-88471b7b86c8"
+              },
+              {
+                "control-id": "ra-5",
+                "description": "Each release is scanned for reachable vulnerabilities before it is deployed.",
+                "links": [
+                  {
+                    "href": "platform-benchmark.manifest.json",
+                    "media-type": "application/json",
+                    "rel": "evidence"
+                  }
+                ],
+                "props": [
+                  {
+                    "name": "origination",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "system-specific"
+                  },
+                  {
+                    "name": "implementation-status",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "partial"
+                  },
+                  {
+                    "name": "verification",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "unverified"
+                  }
+                ],
+                "remarks": "Gap: Weekly re-scans of deployed releases are not yet scheduled.",
+                "uuid": "d0d1801f-9066-502d-9b4f-26e93ea0b4a3"
+              },
+              {
+                "control-id": "sc-7",
+                "description": "Web traffic reaches the server only through the CDN, whose address ranges are the only ones the firewall admits on the web port.",
+                "links": [
+                  {
+                    "href": "platform-proxy-config.manifest.json",
+                    "media-type": "application/json",
+                    "rel": "evidence"
+                  },
+                  {
+                    "href": "platform-benchmark.manifest.json",
+                    "media-type": "application/json",
+                    "rel": "evidence"
+                  }
+                ],
+                "props": [
+                  {
+                    "name": "origination",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "system-specific"
+                  },
+                  {
+                    "name": "implementation-status",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "implemented"
+                  },
+                  {
+                    "name": "verification",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "unverified"
+                  }
+                ],
+                "uuid": "8f060786-5d14-5bfe-9b1e-af0abe0c75c8"
+              },
+              {
+                "control-id": "sc-8",
+                "description": "TLS terminates at the CDN and again at the reverse proxy for notes.example.test and ledger.example.test.",
+                "props": [
+                  {
+                    "name": "origination",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "system-specific"
+                  },
+                  {
+                    "name": "implementation-status",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "implemented"
+                  },
+                  {
+                    "name": "verification",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "unverified"
+                  }
+                ],
+                "uuid": "e1c2d29a-37e6-5e85-b914-aedec741cdea"
+              },
+              {
+                "control-id": "si-2",
+                "description": "The host applies security updates automatically, and a release is rebuilt when a reachable vulnerability is fixed.",
+                "links": [
+                  {
+                    "href": "platform-benchmark.manifest.json",
+                    "media-type": "application/json",
+                    "rel": "evidence"
+                  }
+                ],
+                "props": [
+                  {
+                    "name": "origination",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "system-specific"
+                  },
+                  {
+                    "name": "implementation-status",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "implemented"
+                  },
+                  {
+                    "name": "verification",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "verified"
+                  }
+                ],
+                "uuid": "171c4558-2e40-5b5d-b50f-d0ad3711d876"
+              }
+            ],
+            "source": "https://example.test/profiles/sp800-53-low/profile.json",
+            "uuid": "8ee4062b-46a5-505c-b69f-48f7d5a50a09"
+          }
+        ],
+        "description": "One virtual machine behind a CDN, a reverse proxy, a managed database server and the release pipeline, operated by Example Co. for its own products.",
+        "props": [
+          {
+            "name": "scope-kind",
+            "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+            "value": "platform"
+          },
+          {
+            "name": "scope-id",
+            "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+            "value": "shared-hosting"
+          }
+        ],
+        "title": "Shared hosting platform",
+        "type": "service",
+        "uuid": "8d5752e9-b339-53b0-b981-8777e69db6f4"
+      },
+      {
+        "control-implementations": [
+          {
+            "description": "Controls recorded for Example Cloud.",
+            "implemented-requirements": [
+              {
+                "control-id": "cp-9",
+                "description": "The managed database service takes daily backups and keeps them for seven days.",
+                "props": [
+                  {
+                    "name": "origination",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "system-specific"
+                  },
+                  {
+                    "name": "implementation-status",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "implemented"
+                  },
+                  {
+                    "name": "verification",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "reviewed"
+                  }
+                ],
+                "uuid": "158f6dc5-ccc4-5863-a6ad-04e57813f320"
+              },
+              {
+                "control-id": "pe-3",
+                "description": "Physical access to the data centres is controlled by Example Cloud.",
+                "props": [
+                  {
+                    "name": "origination",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "system-specific"
+                  },
+                  {
+                    "name": "implementation-status",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "implemented"
+                  },
+                  {
+                    "name": "verification",
+                    "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+                    "value": "reviewed"
+                  }
+                ],
+                "uuid": "41cfacbd-8031-5404-ba24-2938bd941027"
+              }
+            ],
+            "source": "https://example.test/profiles/sp800-53-low/profile.json",
+            "uuid": "5c9be98c-0d65-5293-855c-4bfc4f526542"
+          }
+        ],
+        "description": "Example Cloud, an infrastructure provider.",
+        "props": [
+          {
+            "name": "scope-kind",
+            "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+            "value": "provider"
+          },
+          {
+            "name": "scope-id",
+            "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+            "value": "example-cloud"
+          },
+          {
+            "name": "provider-attestation",
+            "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+            "value": "SOC 2 Type II report, available under NDA"
+          }
+        ],
+        "title": "Example Cloud",
+        "type": "service",
+        "uuid": "9f516721-b030-5511-bd9e-7d1ce87a816b"
+      },
+      {
+        "description": "Example CDN, a content delivery network.",
+        "props": [
+          {
+            "name": "scope-kind",
+            "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+            "value": "provider"
+          },
+          {
+            "name": "scope-id",
+            "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+            "value": "example-cdn"
+          }
+        ],
+        "title": "Example CDN",
+        "type": "service",
+        "uuid": "e76a3a10-87e3-54e9-9266-3c505cf5dcbd"
+      },
+      {
+        "description": "Example Git Host, a code host.",
+        "props": [
+          {
+            "name": "scope-kind",
+            "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+            "value": "provider"
+          },
+          {
+            "name": "scope-id",
+            "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+            "value": "example-git"
+          }
+        ],
+        "title": "Example Git Host",
+        "type": "service",
+        "uuid": "eab29db8-6525-5231-8bcf-8daff90f8380"
+      }
+    ],
+    "metadata": {
+      "last-modified": "2026-02-01T06:00:00Z",
+      "oscal-version": "1.2.3",
+      "parties": [
+        {
+          "name": "Example Co.",
+          "type": "organization",
+          "uuid": "12e37acc-31ea-5931-a758-7286a42edd26"
+        }
+      ],
+      "props": [
+        {
+          "name": "audience",
+          "ns": "https://github.com/opensecurity-dev/assessment-spec/ns/oscal",
+          "value": "internal"
+        }
+      ],
+      "title": "Ledger component definition (internal)",
+      "version": "0.1.0"
+    },
+    "uuid": "04bd6139-125a-5938-810c-eb9ff8eb06db"
+  }
+}
