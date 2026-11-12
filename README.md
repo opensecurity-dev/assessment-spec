@@ -44,10 +44,16 @@ Early development. Available now:
   providers, validated against the scope, and resolution into each system's
   effective status for an audience.
 - **`audience`:** public, NDA and internal.
-- **`schema`:** the generated, embedded evidence manifest, scope and controls
-  schemas.
+- **`crosswalk`:** framework criterion IDs mapped to control IDs, and a
+  system's coverage of a framework from its resolution.
+- **`schema`:** the generated, embedded evidence manifest, scope, controls
+  and crosswalk schemas.
+- **`cmd/assessment`:** a CLI to validate the documents and print views,
+  resolutions, coverage and evidence freshness.
+- **`oscal`** (a separate module): OSCAL component definitions per system
+  and audience.
 
-Crosswalks, an OSCAL export and a CLI follow; see the
+Documentation and a first release follow; see the
 [roadmap](docs/specs/initiatives/INIT-ASSESSMENTSPEC-001/ROADMAP.md).
 
 ## Evidence manifest
@@ -139,9 +145,65 @@ For a public or NDA audience, prose is shown only when its record's
 visibility allows and it names no other system; evidence only when the view
 includes it; findings never.
 
+## Framework coverage
+
+A crosswalk maps a framework's criteria to controls, by identifier only, and
+records who made the mapping and its licence:
+
+```json
+{
+  "schemaVersion": "crosswalk/v1",
+  "framework": "iso-27001-2022",
+  "source": "operator",
+  "license": "CC0-1.0",
+  "mappings": [{ "criterion": "A.8.8", "controls": ["RA-5", "SI-2"] }]
+}
+```
+
+`Coverage` gives each criterion the weakest status among its controls. A
+control the resolution does not cover is `unassessed`; add it to the
+system's `addedControls` to assess it. This repository ships no crosswalk
+for a real framework.
+
+## OSCAL
+
+The `github.com/opensecurity-dev/assessment-spec/oscal` module writes one
+system's OSCAL component definition for one audience. Each scope the system
+relies on (the system itself, its platforms and its providers) becomes a
+component, with an implemented requirement per record. The same audience
+rules as resolution apply, and findings are never exported. Assessment
+results and POA&M are not exported yet.
+
+```go
+cd, err := oscal.ComponentDefinition(s, doc, view, oscal.Options{
+	Source:       profileHref,
+	LastModified: lastChanged,
+	Version:      "1.0.0",
+})
+```
+
+## CLI
+
+```bash
+go install github.com/opensecurity-dev/assessment-spec/cmd/assessment@latest
+
+assessment validate --scope scope.json --evidence evidence --controls controls.json --crosswalk iso.json
+assessment freshness --evidence evidence --require govulncheck --require syft
+assessment view     --scope scope.json --evidence evidence --system notes --audience public
+assessment resolve  --scope scope.json --evidence evidence --controls controls.json --baseline low.json --system notes --audience nda
+assessment coverage --scope scope.json --evidence evidence --controls controls.json --baseline low.json --system notes --audience public --crosswalk iso.json
+```
+
+`validate` also reads every artifact and fails on one that names a system its
+manifest does not declare. `freshness` fails when a tool's evidence is stale
+or missing. A baseline file is `{"controls": ["AC-2", ...]}`.
+
+## Example
+
 [`examples/example-co`](examples/example-co) has one platform, two systems,
-seven artifacts and fifteen control records, with every system's view and
-resolution for every audience.
+seven artifacts, fifteen control records and an illustrative crosswalk. It
+includes every system's view and resolution for every audience, plus
+coverage and OSCAL exports.
 
 ## Specifications
 
@@ -156,10 +218,9 @@ resolution for every audience.
 go test ./...
 golangci-lint run
 go generate ./schema
-go test ./scope ./controls -update    # after a deliberate change to the example
-schemakit lint --property-case camelCase schema/evidence-manifest.schema.json
-schemakit lint --property-case camelCase schema/scope.schema.json
-schemakit lint --property-case camelCase schema/controls.schema.json
+go test ./scope ./controls ./crosswalk -update    # after a deliberate change to the example
+(cd oscal && go test ./...)                       # the OSCAL module; -update rewrites its golden exports
+for f in schema/*.schema.json; do schemakit lint --property-case camelCase "$f"; done
 ```
 
 ## License

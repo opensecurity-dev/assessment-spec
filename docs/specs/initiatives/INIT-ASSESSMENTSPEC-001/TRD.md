@@ -19,8 +19,9 @@ findingspec            security findings and exceptions
 compliance engines ──► FedRAMP · SOC 2 · ISO 27001 · security-docs-spec · OSCAL
 ```
 
-The core module (`github.com/opensecurity-dev/assessment-spec`) depends only
-on the standard library and `invopop/jsonschema`. The OSCAL export is a nested
+The core module's library packages (`github.com/opensecurity-dev/assessment-spec`)
+import only the standard library and `invopop/jsonschema`; the CLI adds
+`cobra`, which a library importer does not build. The OSCAL export is a nested
 module (`.../assessment-spec/oscal`) so that its dependencies do not reach
 collectors.
 
@@ -34,8 +35,8 @@ collectors.
 | `crosswalk` | Crosswalk files: framework criterion IDs to control IDs, identifiers only |
 | `audience` | `public`, `nda`, `internal`, ordered, with the same meaning as in `security-docs-spec` |
 | `schema` | Generated, embedded schemas: `evidence-manifest`, `scope`, `controls`, `crosswalk` |
-| `cmd/assessment` | Thin cobra CLI: `validate`, `freshness`, `view` |
-| `oscal` (nested module) | Export of a system's resolved view to OSCAL component definitions, assessment results and POA&M |
+| `cmd/assessment` | Thin cobra CLI: `validate`, `freshness`, `view`, `resolve`, `coverage` |
+| `oscal` (nested module) | Export of a system's records, for one audience, to an OSCAL component definition |
 
 ## 3. Evidence manifest
 
@@ -207,12 +208,44 @@ names another system.
 ## 6. Crosswalks
 
 ```json
-{ "framework": "iso-27001-2022", "source": "operator", "mappings": [ { "criterion": "A.8.8", "controls": ["RA-5", "SI-2"] } ] }
+{ "schemaVersion": "crosswalk/v1", "framework": "iso-27001-2022", "source": "operator", "license": "CC0-1.0",
+  "mappings": [ { "criterion": "A.8.8", "controls": ["RA-5", "SI-2"] } ] }
 ```
 
-Criteria are identifiers only. The repository ships no crosswalk whose terms
-do not allow redistribution; it may ship crosswalks from public-domain
-sources, recording the source.
+Criteria are identifiers only; the format has no field for criterion text.
+`source` and `license` are required. The repository ships no crosswalk whose
+terms do not allow redistribution; it may ship crosswalks from public-domain
+sources, recording the source. The example crosswalk is illustrative.
+
+Coverage is derived from a system's resolution for one audience. A criterion
+takes the weakest status among its mapped controls, not-applicable yielding
+as in resolution, so it is implemented only when every mapped control is. A
+mapped control outside the resolution (neither in the baseline nor in the
+system's added controls) is `unassessed` and flagged `outsideBaseline`.
+
+## 6a. OSCAL export
+
+`oscal.ComponentDefinition(scope, controls, view, options)` writes an OSCAL
+1.2.3 component definition for the view's system and audience:
+
+- one `service` component each for the system, its platforms and its
+  providers, with an implemented requirement per record at that scope;
+  provider attestations become properties;
+- record fields map to properties in the
+  `https://github.com/opensecurity-dev/assessment-spec/ns/oscal` namespace:
+  `implementation-status`, `origination`, `inherits-from`, `verification`;
+  inherited and hybrid system records also carry `effective-status`, the
+  status resolution gives;
+- prose follows `controls.ProseWithheld`; withheld prose is replaced by a
+  fixed sentence and a `prose-withheld` property with the reason; gaps and
+  justifications go to remarks; evidence links only to manifests in the view;
+  findings are never exported;
+- UUIDs are name-based (UUIDv5 over the organization, object kind and IDs),
+  and the caller supplies the catalog or profile source, last-modified time
+  and version, so the same inputs give the same document.
+
+Exports are validated against the OSCAL schema in tests. The module requires
+a tagged core version once the core is released.
 
 ## 7. Schemas and conventions
 
@@ -226,7 +259,11 @@ sources, recording the source.
 
 | Decision | Options | Needed by |
 |---|---|---|
-| OSCAL export scope | Component definitions only, or also assessment results and POA&M | `RMI-ASSESSMENTSPEC-016` |
+| OSCAL assessment results and POA&M | Export from findingspec findings referenced by records, or leave to compliance engines | After v0.1 |
+
+Decided: the OSCAL export writes component definitions only for v0.1.
+Assessment results and POA&M are built from findings, which this format
+references but does not hold.
 
 Decided: attestations use `security-docs-spec`'s verification levels
 (`unverified`, `reviewed`, `verified`), so claims and records read the same.
