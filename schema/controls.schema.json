@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/opensecurity-dev/assessment-spec/schema/controls.schema.json",
+  "$ref": "#/$defs/Document",
+  "$defs": {
+    "Attestation": {
+      "properties": {
+        "by": {
+          "type": "string",
+          "description": "By names the person."
+        },
+        "role": {
+          "type": "string",
+          "description": "Role is the person's role, such as \"operator\" or \"security owner\"."
+        },
+        "at": {
+          "type": "string",
+          "description": "At is when they approved it, as an RFC 3339 date or time."
+        },
+        "verification": {
+          "type": "string",
+          "enum": [
+            "unverified",
+            "reviewed",
+            "verified"
+          ],
+          "description": "Verification is how far they checked it."
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "by",
+        "at",
+        "verification"
+      ],
+      "description": "Attestation is a person's approval of a record."
+    },
+    "Document": {
+      "properties": {
+        "schemaVersion": {
+          "type": "string",
+          "description": "SchemaVersion is the document format version, \"controls/v1\". Optional;\nwhen absent, version 1 is assumed."
+        },
+        "records": {
+          "items": {
+            "$ref": "#/$defs/Implementation"
+          },
+          "type": "array",
+          "description": "Records are the implementation records, at most one per control and\nscope."
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "records"
+      ],
+      "description": "Document is one organization's control implementation records."
+    },
+    "EvidenceRef": {
+      "properties": {
+        "manifest": {
+          "type": "string",
+          "description": "Manifest is the manifest's file name in its evidence set."
+        },
+        "sha256": {
+          "type": "string",
+          "description": "SHA256 optionally pins the artifact's hash."
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "manifest"
+      ],
+      "description": "EvidenceRef points at an evidence manifest."
+    },
+    "Implementation": {
+      "properties": {
+        "control": {
+          "type": "string",
+          "description": "Control is a NIST SP 800-53 control ID, such as \"AC-2\" or \"SC-7(5)\"."
+        },
+        "scope": {
+          "type": "string",
+          "description": "Scope is the ID of the system, platform or provider the record is for."
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "implemented",
+            "partial",
+            "planned",
+            "alternative",
+            "not-applicable"
+          ],
+          "description": "Status is the implementation status. Required, except for inherited\nrecords, whose status comes from the scopes they inherit from."
+        },
+        "origination": {
+          "type": "string",
+          "enum": [
+            "system-specific",
+            "inherited",
+            "hybrid"
+          ],
+          "description": "Origination says where the implementation comes from."
+        },
+        "inheritsFrom": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "description": "InheritsFrom lists the platform or provider IDs an inherited or hybrid\nrecord relies on: a system's platforms or providers, or a platform's\nproviders."
+        },
+        "statement": {
+          "type": "string",
+          "description": "Statement says how the control is met, as reviewed prose."
+        },
+        "gap": {
+          "type": "string",
+          "description": "Gap says what is missing. Required when the status is partial or\nplanned."
+        },
+        "justification": {
+          "type": "string",
+          "description": "Justification says why the control does not apply. Required when the\nstatus is not-applicable."
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/EvidenceRef"
+          },
+          "type": "array",
+          "description": "Evidence references evidence manifests by file name."
+        },
+        "findings": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "description": "Findings lists findingspec finding IDs that bear on the control."
+        },
+        "attestations": {
+          "items": {
+            "$ref": "#/$defs/Attestation"
+          },
+          "type": "array",
+          "description": "Attestations records who approved the record."
+        },
+        "visibility": {
+          "type": "string",
+          "enum": [
+            "public",
+            "nda",
+            "internal"
+          ],
+          "description": "Visibility is the widest audience that may read the record's prose.\nDefaults to internal; a reviewer raises it."
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "control",
+        "scope",
+        "origination"
+      ],
+      "description": "Implementation records how one scope implements one control."
+    }
+  },
+  "title": "Controls",
+  "description": "Control implementation records for systems, shared platforms and providers, with origination, inheritance, prose, evidence references and attestations."
+}

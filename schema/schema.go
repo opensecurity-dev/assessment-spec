@@ -15,3 +15,8 @@ var EvidenceManifest []byte
 //
 //go:embed scope.schema.json
 var Scope []byte
+
+// Controls is the generated schema for controls.Document.
+//
+//go:embed controls.schema.json
+var Controls []byte

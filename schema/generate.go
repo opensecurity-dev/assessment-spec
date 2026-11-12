@@ -6,6 +6,7 @@ import (
 
 	"github.com/invopop/jsonschema"
 
+	"github.com/opensecurity-dev/assessment-spec/controls"
 	"github.com/opensecurity-dev/assessment-spec/evidence"
 	"github.com/opensecurity-dev/assessment-spec/scope"
 )
@@ -17,6 +18,7 @@ const BaseID = "https://github.com/opensecurity-dev/assessment-spec/schema/"
 const (
 	EvidenceManifestFile = "evidence-manifest.schema.json"
 	ScopeFile            = "scope.schema.json"
+	ControlsFile         = "controls.schema.json"
 )
 
 // GenerateEvidenceManifest builds the evidence manifest schema from the Go
@@ -35,10 +37,18 @@ func GenerateScope() ([]byte, error) {
 		"An organization's external providers, shared platforms and separately marketed systems, and which systems run on which platforms.")
 }
 
+// GenerateControls builds the controls document schema from the Go types.
+func GenerateControls() ([]byte, error) {
+	return generate(&controls.Document{}, "../controls", ControlsFile,
+		"Controls",
+		"Control implementation records for systems, shared platforms and providers, with origination, inheritance, prose, evidence references and attestations.")
+}
+
 // All maps each schema file name to its generator.
 var All = map[string]func() ([]byte, error){
 	EvidenceManifestFile: GenerateEvidenceManifest,
 	ScopeFile:            GenerateScope,
+	ControlsFile:         GenerateControls,
 }
 
 func generate(v any, srcDir, file, title, description string) ([]byte, error) {
