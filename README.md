@@ -38,10 +38,16 @@ Early development. Available now:
 - **`scope`:** the scope document (providers, shared platforms, systems),
   validation of it and of evidence against it, and per-system views for each
   audience.
+- **`scope` markers:** distinctive strings per system, mention detection in
+  any text, and a check for artifacts that name systems they do not declare.
+- **`controls`:** implementation records for systems, platforms and
+  providers, validated against the scope, and resolution into each system's
+  effective status for an audience.
 - **`audience`:** public, NDA and internal.
-- **`schema`:** the generated, embedded evidence manifest and scope schemas.
+- **`schema`:** the generated, embedded evidence manifest, scope and controls
+  schemas.
 
-Control records with inheritance, crosswalks and an OSCAL export follow; see the
+Crosswalks, an OSCAL export and a CLI follow; see the
 [roadmap](docs/specs/initiatives/INIT-ASSESSMENTSPEC-001/ROADMAP.md).
 
 ## Evidence manifest
@@ -108,8 +114,34 @@ for _, w := range view.Withheld {
 }
 ```
 
-[`examples/example-co`](examples/example-co) has one platform, two systems
-and seven artifacts, with every system's view for every audience.
+## Controls, recorded once
+
+A control is recorded on the scope that implements it. A system inherits its
+platforms' and providers' records unless it records the control itself; a
+hybrid record takes the weaker of its own status and its sources'. A control
+nothing records is `unassessed`, never `implemented`:
+
+```go
+doc, err := controls.Load("controls.json")
+if err != nil {
+	return err
+}
+res, err := controls.Resolve(s, doc, view, baseline) // baseline from a NIST SP 800-53 catalog
+if err != nil {
+	return err
+}
+for _, c := range res.Controls {
+	fmt.Println(c.Control, c.Status, c.Via) // RA-5 partial [system:notes platform:shared-hosting]
+}
+```
+
+For a public or NDA audience, prose is shown only when its record's
+visibility allows and it names no other system; evidence only when the view
+includes it; findings never.
+
+[`examples/example-co`](examples/example-co) has one platform, two systems,
+seven artifacts and fifteen control records, with every system's view and
+resolution for every audience.
 
 ## Specifications
 
@@ -124,9 +156,10 @@ and seven artifacts, with every system's view for every audience.
 go test ./...
 golangci-lint run
 go generate ./schema
-go test ./scope -update    # after a deliberate change to the example views
+go test ./scope ./controls -update    # after a deliberate change to the example
 schemakit lint --property-case camelCase schema/evidence-manifest.schema.json
 schemakit lint --property-case camelCase schema/scope.schema.json
+schemakit lint --property-case camelCase schema/controls.schema.json
 ```
 
 ## License

@@ -166,17 +166,43 @@ belong to their target, and mentions name known systems.
 | `attestations` | Who approved the statement, when, and at what verification level |
 | `visibility` | `public`, `nda` or `internal`; default `internal` |
 
-`controls.Resolve(scope, records, systemID)` yields each control in the
-system's baseline plus its added controls, with an effective status:
+`controls.Resolve(scope, doc, view, baseline)` yields each control in the
+baseline (supplied by the caller from a catalog; none ships here) plus the
+system's added controls, in catalog order, with an effective status:
 
-- a system record wins over an inherited one;
-- `inherited` takes the platform's (or provider's) status;
-- `hybrid` takes the weaker of the system's and the platform's status;
-- a control with no record is `unassessed`, never `implemented`.
+- a system record wins; `system-specific` gives its own status, `inherited`
+  its sources' status, and `hybrid` the weaker of its own and its sources';
+- with no system record, the system inherits implicitly from its platforms
+  and its direct providers, and a platform with no record from its
+  providers, so a provider record reaches every system through the platform;
+- several sources give the weakest status, and `not-applicable` yields to
+  any other;
+- a control no record reaches is `unassessed`, never `implemented`.
 
-A platform record is written once and appears in every system that runs on the
-platform. A finding on a platform component appears in every such system's
-resolved view, subject to the same `mentions` filtering as evidence.
+Each resolved control lists the scopes that produced it (`via`) and the
+weakest verification among their attestations, so a statement no person has
+checked is visibly `unverified`.
+
+A platform record is written once and appears in every system that runs on
+the platform. The view decides what an audience sees:
+
+- **Status** is always shown.
+- **Prose** (statement, gap, justification) is shown only when the record's
+  visibility allows and, for external audiences, when it names no other
+  system by marker; otherwise it is withheld with the reason.
+- **Evidence** is shown only when the system's view includes it; otherwise it
+  is withheld with the view's reason, or `not-in-view`.
+- **Findings** are shown only to the internal audience.
+
+### Markers and mention detection
+
+A system may list `markers`: distinctive strings (domains, host names,
+database names, service users) of at least four characters, unique across
+systems. `DetectMentions` finds them in any text, ignoring case;
+`UndeclaredMentions` reads every artifact in a set and reports those whose
+content names a system that the manifest's `mentions` omits, the safety net
+under audience-filtered views. Resolution uses markers to withhold prose that
+names another system.
 
 ## 6. Crosswalks
 
@@ -200,8 +226,10 @@ sources, recording the source.
 
 | Decision | Options | Needed by |
 |---|---|---|
-| Attestation verification levels | Reuse `security-docs-spec` levels, or define a smaller set here | `RMI-ASSESSMENTSPEC-011` |
 | OSCAL export scope | Component definitions only, or also assessment results and POA&M | `RMI-ASSESSMENTSPEC-016` |
+
+Decided: attestations use `security-docs-spec`'s verification levels
+(`unverified`, `reviewed`, `verified`), so claims and records read the same.
 
 Decided: a platform artifact without `mentions` is withheld from external
 views (strict), with the reason, until its collector declares what it names
