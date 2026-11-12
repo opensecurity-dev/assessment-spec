@@ -73,8 +73,11 @@ type Manifest struct {
 	// Target is what the artifact is about.
 	Target *Target `json:"target,omitempty"`
 	// Mentions lists the IDs of systems whose names appear in the artifact's
-	// content, so views can withhold it from other systems' audiences.
-	Mentions []string `json:"mentions,omitempty"`
+	// content, so views can withhold it from other systems' audiences. An
+	// empty list declares that it names none; an absent field declares
+	// nothing, and a platform artifact without it is withheld from external
+	// audiences.
+	Mentions []string `json:"mentions,omitzero"`
 	// Controls lists control IDs the artifact supports, as a hint; a
 	// compliance engine decides what it supports.
 	Controls []string `json:"controls,omitempty"`

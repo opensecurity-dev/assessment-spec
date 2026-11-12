@@ -60,7 +60,7 @@
             "type": "string"
           },
           "type": "array",
-          "description": "Mentions lists the IDs of systems whose names appear in the artifact's\ncontent, so views can withhold it from other systems' audiences."
+          "description": "Mentions lists the IDs of systems whose names appear in the artifact's\ncontent, so views can withhold it from other systems' audiences. An\nempty list declares that it names none; an absent field declares\nnothing, and a platform artifact without it is withheld from external\naudiences."
         },
         "controls": {
           "items": {
