@@ -1,0 +1,251 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/opensecurity-dev/assessment-spec/schema/scope.schema.json",
+  "$ref": "#/$defs/Scope",
+  "$defs": {
+    "Component": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "ID is a lowercase identifier, unique across the scope document."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name is an optional display name."
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "service",
+            "database",
+            "host",
+            "network",
+            "storage",
+            "pipeline",
+            "other"
+          ],
+          "description": "Kind classifies the component."
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "id",
+        "kind"
+      ],
+      "description": "Component is a part of a platform or system that evidence can target."
+    },
+    "Disclosure": {
+      "properties": {
+        "sharedPlatformStatement": {
+          "type": "string",
+          "description": "SharedPlatformStatement describes the shared platform without naming\nany other system. Sharing is material to an assessment, so it is stated."
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "description": "Disclosure holds the wording a system's external documents use for shared infrastructure."
+    },
+    "Organization": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "ID is a lowercase identifier, such as \"example-co\"."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name is the organization's display name."
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "id",
+        "name"
+      ],
+      "description": "Organization identifies the operator."
+    },
+    "Platform": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "ID is a lowercase identifier, unique across providers, platforms and\nsystems."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name is the platform's display name, for internal use."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description says what the platform provides."
+        },
+        "providers": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "description": "Providers lists the IDs of providers the platform builds on."
+        },
+        "components": {
+          "items": {
+            "$ref": "#/$defs/Component"
+          },
+          "type": "array",
+          "description": "Components lists the platform's parts."
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "id",
+        "name"
+      ],
+      "description": "Platform is shared infrastructure operated by the organization."
+    },
+    "Provider": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "ID is a lowercase identifier, unique across providers, platforms and\nsystems."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name is the provider's display name."
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "iaas",
+            "paas",
+            "saas",
+            "cdn",
+            "code-host",
+            "other"
+          ],
+          "description": "Kind classifies the provider."
+        },
+        "attestations": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "description": "Attestations describes the provider's own reports or certifications\nthat the inherited controls rest on, such as \"SOC 2 Type II report,\nunder NDA\"."
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "kind"
+      ],
+      "description": "Provider is an external service whose controls are inherited."
+    },
+    "Scope": {
+      "properties": {
+        "schemaVersion": {
+          "type": "string",
+          "description": "SchemaVersion is the document format version, \"scope/v1\". Optional;\nwhen absent, version 1 is assumed."
+        },
+        "organization": {
+          "$ref": "#/$defs/Organization",
+          "description": "Organization is the organization that operates the platforms and systems."
+        },
+        "providers": {
+          "items": {
+            "$ref": "#/$defs/Provider"
+          },
+          "type": "array",
+          "description": "Providers are external services the platforms and systems build on, and\nfrom which they inherit controls."
+        },
+        "platforms": {
+          "items": {
+            "$ref": "#/$defs/Platform"
+          },
+          "type": "array",
+          "description": "Platforms are shared infrastructure the organization operates. A\nplatform is never assessed alone; its controls are inherited by the\nsystems that run on it."
+        },
+        "systems": {
+          "items": {
+            "$ref": "#/$defs/System"
+          },
+          "type": "array",
+          "description": "Systems are what an audience buys or uses. Each gets its own\nassessment, documents and audience."
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "organization",
+        "systems"
+      ],
+      "description": "Scope is one organization's scope document."
+    },
+    "System": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "ID is a lowercase identifier, unique across providers, platforms and\nsystems."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name is the product's display name."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description says what the product does."
+        },
+        "platforms": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "description": "Platforms lists the IDs of the shared platforms the system runs on."
+        },
+        "providers": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "description": "Providers lists the IDs of providers the system uses directly, beyond\nthose of its platforms."
+        },
+        "components": {
+          "items": {
+            "$ref": "#/$defs/Component"
+          },
+          "type": "array",
+          "description": "Components lists the parts the system owns."
+        },
+        "baseline": {
+          "type": "string",
+          "enum": [
+            "low",
+            "moderate",
+            "high"
+          ],
+          "description": "Baseline is the control baseline the system is assessed against."
+        },
+        "addedControls": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "description": "AddedControls lists control IDs added to the baseline for this system,\nsuch as the PT family for a system that handles children's data."
+        },
+        "disclosure": {
+          "$ref": "#/$defs/Disclosure",
+          "description": "Disclosure says how the system's external documents describe what it\nshares with other systems."
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "id",
+        "name"
+      ],
+      "description": "System is a separately marketed product."
+    }
+  },
+  "title": "Scope",
+  "description": "An organization's external providers, shared platforms and separately marketed systems, and which systems run on which platforms."
+}

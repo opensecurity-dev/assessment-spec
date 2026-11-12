@@ -10,3 +10,8 @@ import _ "embed"
 //
 //go:embed evidence-manifest.schema.json
 var EvidenceManifest []byte
+
+// Scope is the generated schema for scope.Scope.
+//
+//go:embed scope.schema.json
+var Scope []byte

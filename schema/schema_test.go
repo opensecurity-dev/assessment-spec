@@ -9,31 +9,60 @@ import (
 	"github.com/opensecurity-dev/assessment-spec/schema"
 )
 
-func TestEvidenceManifestSchemaIsCurrent(t *testing.T) {
-	got, err := schema.GenerateEvidenceManifest()
-	if err != nil {
-		t.Fatal(err)
+func TestEmbeddedSchemasAreCurrent(t *testing.T) {
+	embedded := map[string][]byte{
+		schema.EvidenceManifestFile: schema.EvidenceManifest,
+		schema.ScopeFile:            schema.Scope,
 	}
-	if !bytes.Equal(got, schema.EvidenceManifest) {
-		t.Fatal("evidence-manifest.schema.json is stale; run go generate ./schema")
+	if len(embedded) != len(schema.All) {
+		t.Fatalf("%d embedded schemas, %d generators", len(embedded), len(schema.All))
+	}
+	for file, gen := range schema.All {
+		got, err := gen()
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !bytes.Equal(got, embedded[file]) {
+			t.Errorf("%s is stale; run go generate ./schema", file)
+		}
 	}
 }
 
-func TestEvidenceManifestRequiredFields(t *testing.T) {
+func required(t *testing.T, doc []byte, def string) []string {
+	t.Helper()
 	var s struct {
 		Defs map[string]struct {
 			Required []string `json:"required"`
 		} `json:"$defs"`
 	}
-	if err := json.Unmarshal(schema.EvidenceManifest, &s); err != nil {
+	if err := json.Unmarshal(doc, &s); err != nil {
 		t.Fatal(err)
 	}
-	m, ok := s.Defs["Manifest"]
+	d, ok := s.Defs[def]
 	if !ok {
-		t.Fatal("schema lacks $defs.Manifest")
+		t.Fatalf("schema lacks $defs.%s", def)
 	}
-	slices.Sort(m.Required)
-	if want := []string{"artifactPath", "generatedAt", "tool"}; !slices.Equal(m.Required, want) {
-		t.Fatalf("required = %v, want %v", m.Required, want)
+	r := slices.Clone(d.Required)
+	slices.Sort(r)
+	return r
+}
+
+func TestRequiredFields(t *testing.T) {
+	cases := []struct {
+		doc  []byte
+		def  string
+		want []string
+	}{
+		{schema.EvidenceManifest, "Manifest", []string{"artifactPath", "generatedAt", "tool"}},
+		{schema.Scope, "Scope", []string{"organization", "systems"}},
+		{schema.Scope, "System", []string{"id", "name"}},
+		{schema.Scope, "Platform", []string{"id", "name"}},
+		{schema.Scope, "Provider", []string{"id", "kind", "name"}},
+		{schema.Scope, "Component", []string{"id", "kind"}},
+	}
+	for _, c := range cases {
+		if got := required(t, c.doc, c.def); !slices.Equal(got, c.want) {
+			t.Errorf("%s required = %v, want %v", c.def, got, c.want)
+		}
 	}
 }

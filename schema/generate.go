@@ -7,29 +7,52 @@ import (
 	"github.com/invopop/jsonschema"
 
 	"github.com/opensecurity-dev/assessment-spec/evidence"
+	"github.com/opensecurity-dev/assessment-spec/scope"
 )
 
 // BaseID is the prefix of every schema's $id.
 const BaseID = "https://github.com/opensecurity-dev/assessment-spec/schema/"
 
-// EvidenceManifestFile is the evidence manifest schema's file name.
-const EvidenceManifestFile = "evidence-manifest.schema.json"
+// Schema file names.
+const (
+	EvidenceManifestFile = "evidence-manifest.schema.json"
+	ScopeFile            = "scope.schema.json"
+)
 
 // GenerateEvidenceManifest builds the evidence manifest schema from the Go
-// types. It reads field comments from ../evidence, so it runs from this
-// directory, as go generate and go test do.
+// types. Like every generator here, it reads field comments from the source
+// packages, so it runs from this directory, as go generate and go test do.
 func GenerateEvidenceManifest() ([]byte, error) {
+	return generate(&evidence.Manifest{}, "../evidence", EvidenceManifestFile,
+		"Evidence manifest",
+		"Metadata a collector writes once beside each evidence artifact: provenance, freshness inputs, scope and integrity.")
+}
+
+// GenerateScope builds the scope document schema from the Go types.
+func GenerateScope() ([]byte, error) {
+	return generate(&scope.Scope{}, "../scope", ScopeFile,
+		"Scope",
+		"An organization's external providers, shared platforms and separately marketed systems, and which systems run on which platforms.")
+}
+
+// All maps each schema file name to its generator.
+var All = map[string]func() ([]byte, error){
+	EvidenceManifestFile: GenerateEvidenceManifest,
+	ScopeFile:            GenerateScope,
+}
+
+func generate(v any, srcDir, file, title, description string) ([]byte, error) {
 	r := &jsonschema.Reflector{RequiredFromJSONSchemaTags: false}
-	if err := r.AddGoComments("github.com/opensecurity-dev/assessment-spec/schema", "../evidence"); err != nil {
-		return nil, fmt.Errorf("schema: read Go comments: %w", err)
+	if err := r.AddGoComments("github.com/opensecurity-dev/assessment-spec/schema", srcDir); err != nil {
+		return nil, fmt.Errorf("schema: read Go comments for %s: %w", file, err)
 	}
-	s := r.Reflect(&evidence.Manifest{})
-	s.ID = BaseID + EvidenceManifestFile
-	s.Title = "Evidence manifest"
-	s.Description = "Metadata a collector writes once beside each evidence artifact: provenance, freshness inputs, scope and integrity."
+	s := r.Reflect(v)
+	s.ID = jsonschema.ID(BaseID + file)
+	s.Title = title
+	s.Description = description
 	b, err := json.MarshalIndent(s, "", "  ")
 	if err != nil {
-		return nil, fmt.Errorf("schema: encode: %w", err)
+		return nil, fmt.Errorf("schema: encode %s: %w", file, err)
 	}
 	return append(b, '\n'), nil
 }
