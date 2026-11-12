@@ -235,6 +235,13 @@
         "disclosure": {
           "$ref": "#/$defs/Disclosure",
           "description": "Disclosure says how the system's external documents describe what it\nshares with other systems."
+        },
+        "markers": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "description": "Markers are distinctive strings whose presence in an artifact or a\nstatement shows that it names this system: domains, host names,\ndatabase names, service users. Matching ignores case. Avoid common\nwords; each marker must be at least four characters."
         }
       },
       "additionalProperties": false,

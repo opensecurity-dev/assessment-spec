@@ -141,6 +141,11 @@ type System struct {
 	// Disclosure says how the system's external documents describe what it
 	// shares with other systems.
 	Disclosure *Disclosure `json:"disclosure,omitempty"`
+	// Markers are distinctive strings whose presence in an artifact or a
+	// statement shows that it names this system: domains, host names,
+	// database names, service users. Matching ignores case. Avoid common
+	// words; each marker must be at least four characters.
+	Markers []string `json:"markers,omitempty"`
 }
 
 // Disclosure holds the wording a system's external documents use for shared
@@ -188,6 +193,38 @@ func (s *Scope) Platform(id string) (*Platform, bool) {
 		}
 	}
 	return nil, false
+}
+
+// Provider returns the provider with id.
+func (s *Scope) Provider(id string) (*Provider, bool) {
+	for i := range s.Providers {
+		if s.Providers[i].ID == id {
+			return &s.Providers[i], true
+		}
+	}
+	return nil, false
+}
+
+// Kind of an entity in the scope.
+const (
+	KindSystem   = "system"
+	KindPlatform = "platform"
+	KindProvider = "provider"
+)
+
+// KindOf returns whether id is a system, platform or provider, or "" if it
+// is none.
+func (s *Scope) KindOf(id string) string {
+	if _, ok := s.System(id); ok {
+		return KindSystem
+	}
+	if _, ok := s.Platform(id); ok {
+		return KindPlatform
+	}
+	if _, ok := s.Provider(id); ok {
+		return KindProvider
+	}
+	return ""
 }
 
 // SystemsOn returns the IDs of the systems that run on platform id, in

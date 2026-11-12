@@ -9,6 +9,8 @@ import (
 	"github.com/opensecurity-dev/assessment-spec/evidence"
 )
 
+const minMarkerLen = 4
+
 var (
 	idPattern      = regexp.MustCompile(`^[a-z0-9][a-z0-9-]*$`)
 	controlPattern = regexp.MustCompile(`^[A-Z]{2}-[0-9]+(\([0-9]+\))?$`)
@@ -19,7 +21,7 @@ var (
 // one identifier namespace, as do all components, so a manifest's target and
 // mentions are unambiguous.
 func (s *Scope) Validate() error {
-	v := &validator{ids: map[string]string{}, components: map[string]string{}}
+	v := &validator{ids: map[string]string{}, components: map[string]string{}, markers: map[string]string{}}
 	if s.SchemaVersion != "" && s.SchemaVersion != SchemaVersion {
 		v.addf("unsupported schemaVersion %q", s.SchemaVersion)
 	}
@@ -48,6 +50,17 @@ func (s *Scope) Validate() error {
 		case "", BaselineLow, BaselineModerate, BaselineHigh:
 		default:
 			v.addf("system %q has unknown baseline %q", sys.ID, sys.Baseline)
+		}
+		for _, m := range sys.Markers {
+			key := strings.ToLower(strings.TrimSpace(m))
+			switch {
+			case len(key) < minMarkerLen:
+				v.addf("system %q marker %q is shorter than %d characters", sys.ID, m, minMarkerLen)
+			case v.markers[key] != "" && v.markers[key] != sys.ID:
+				v.addf("system %q marker %q is already a marker of %q", sys.ID, m, v.markers[key])
+			default:
+				v.markers[key] = sys.ID
+			}
 		}
 		for _, c := range sys.AddedControls {
 			if !controlPattern.MatchString(c) {
@@ -118,6 +131,7 @@ func (s *Scope) CheckEvidence(set *evidence.Set) error {
 type validator struct {
 	ids        map[string]string // entity ID -> kind
 	components map[string]string // component ID -> owner
+	markers    map[string]string // lowercased marker -> system ID
 	errs       []error
 }
 
