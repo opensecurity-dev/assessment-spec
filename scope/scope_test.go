@@ -226,3 +226,57 @@ func TestLoadRejectsUnknownField(t *testing.T) {
 		t.Fatalf("got %v, want an unknown-field error", err)
 	}
 }
+
+func TestDetectMentions(t *testing.T) {
+	s, _ := loadExample(t)
+	cases := map[string][]string{
+		"proxy for NOTES.example.test and ledger.example.test": {"notes", "ledger"},
+		"role ledger_app on ledger_db":                         {"ledger"},
+		"release notes for the platform":                       nil,
+	}
+	for text, want := range cases {
+		if got := s.DetectMentions([]byte(text)); !slices.Equal(got, want) {
+			t.Errorf("DetectMentions(%q) = %v, want %v", text, got, want)
+		}
+	}
+}
+
+func TestUndeclaredMentions(t *testing.T) {
+	s, set := loadExample(t)
+	probs, err := s.UndeclaredMentions(set)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(probs) != 0 {
+		t.Fatalf("example declares every mention, got %+v", probs)
+	}
+	dir := t.TempDir()
+	write := func(name, body string) {
+		if err := os.WriteFile(filepath.Join(dir, name), []byte(body), 0o600); err != nil {
+			t.Fatal(err)
+		}
+	}
+	write("a.txt", "ledger_db grants for notes_app")
+	write("a.manifest.json", `{"tool":"t","generatedAt":"2026-01-01T00:00:00Z","artifactPath":"a.txt","target":{"system":"notes"},"mentions":[]}`)
+	bad, err := evidence.LoadSet(dir)
+	if err != nil {
+		t.Fatal(err)
+	}
+	probs, err = s.UndeclaredMentions(bad)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(probs) != 1 || !slices.Equal(probs[0].Undeclared, []string{"ledger"}) {
+		t.Fatalf("got %+v, want ledger undeclared (notes is the target)", probs)
+	}
+}
+
+func TestMarkerValidation(t *testing.T) {
+	s, _ := loadExample(t)
+	s.Systems[0].Markers = append(s.Systems[0].Markers, "ab")
+	s.Systems[1].Markers = append(s.Systems[1].Markers, "NOTES_DB")
+	err := s.Validate()
+	if err == nil || !strings.Contains(err.Error(), "shorter than") || !strings.Contains(err.Error(), "already a marker") {
+		t.Fatalf("got %v, want short and duplicate marker errors", err)
+	}
+}

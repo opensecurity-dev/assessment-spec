@@ -1,22 +1,58 @@
 {
   "schemaVersion": "scope/v1",
-  "organization": { "id": "example-co", "name": "Example Co." },
+  "organization": {
+    "id": "example-co",
+    "name": "Example Co."
+  },
   "providers": [
-    { "id": "example-cloud", "name": "Example Cloud", "kind": "iaas", "attestations": ["SOC 2 Type II report, available under NDA"] },
-    { "id": "example-cdn", "name": "Example CDN", "kind": "cdn" },
-    { "id": "example-git", "name": "Example Git Host", "kind": "code-host" }
+    {
+      "id": "example-cloud",
+      "name": "Example Cloud",
+      "kind": "iaas",
+      "attestations": [
+        "SOC 2 Type II report, available under NDA"
+      ]
+    },
+    {
+      "id": "example-cdn",
+      "name": "Example CDN",
+      "kind": "cdn"
+    },
+    {
+      "id": "example-git",
+      "name": "Example Git Host",
+      "kind": "code-host"
+    }
   ],
   "platforms": [
     {
       "id": "shared-hosting",
       "name": "Shared hosting platform",
       "description": "One virtual machine behind a CDN, a reverse proxy, a managed database server and the release pipeline, operated by Example Co. for its own products.",
-      "providers": ["example-cloud", "example-cdn", "example-git"],
+      "providers": [
+        "example-cloud",
+        "example-cdn",
+        "example-git"
+      ],
       "components": [
-        { "id": "host-1", "kind": "host" },
-        { "id": "web-proxy", "name": "Reverse proxy", "kind": "service" },
-        { "id": "db-server", "name": "Managed database server", "kind": "database" },
-        { "id": "release-pipeline", "kind": "pipeline" }
+        {
+          "id": "host-1",
+          "kind": "host"
+        },
+        {
+          "id": "web-proxy",
+          "name": "Reverse proxy",
+          "kind": "service"
+        },
+        {
+          "id": "db-server",
+          "name": "Managed database server",
+          "kind": "database"
+        },
+        {
+          "id": "release-pipeline",
+          "kind": "pipeline"
+        }
       ]
     }
   ],
@@ -25,30 +61,60 @@
       "id": "notes",
       "name": "Notes",
       "description": "A note-taking service for families.",
-      "platforms": ["shared-hosting"],
+      "platforms": [
+        "shared-hosting"
+      ],
       "components": [
-        { "id": "notes-app", "kind": "service" },
-        { "id": "notes-db", "kind": "database" }
+        {
+          "id": "notes-app",
+          "kind": "service"
+        },
+        {
+          "id": "notes-db",
+          "kind": "database"
+        }
       ],
       "baseline": "low",
-      "addedControls": ["PT-2", "PT-3", "PT-5"],
+      "addedControls": [
+        "PT-2",
+        "PT-3",
+        "PT-5"
+      ],
       "disclosure": {
         "sharedPlatformStatement": "Notes runs on infrastructure Example Co. operates for its own products, with a separate database and service account per product."
-      }
+      },
+      "markers": [
+        "notes.example.test",
+        "notes_db",
+        "notes_app"
+      ]
     },
     {
       "id": "ledger",
       "name": "Ledger",
       "description": "A bookkeeping service for small businesses.",
-      "platforms": ["shared-hosting"],
+      "platforms": [
+        "shared-hosting"
+      ],
       "components": [
-        { "id": "ledger-app", "kind": "service" },
-        { "id": "ledger-db", "kind": "database" }
+        {
+          "id": "ledger-app",
+          "kind": "service"
+        },
+        {
+          "id": "ledger-db",
+          "kind": "database"
+        }
       ],
       "baseline": "low",
       "disclosure": {
         "sharedPlatformStatement": "Ledger runs on infrastructure Example Co. operates for its own products, with a separate database and service account per product."
-      }
+      },
+      "markers": [
+        "ledger.example.test",
+        "ledger_db",
+        "ledger_app"
+      ]
     }
   ]
 }
