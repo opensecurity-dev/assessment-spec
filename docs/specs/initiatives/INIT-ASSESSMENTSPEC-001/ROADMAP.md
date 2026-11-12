@@ -56,11 +56,11 @@ are reviewed and executed by phase, and commits implementing one carry
 
 **Theme:** Framework criteria by identifier, OSCAL as an export, and a CLI.
 
-- [ ] `RMI-ASSESSMENTSPEC-015` Crosswalk files: criterion IDs to control IDs, with source and licence recorded; coverage of a framework from a resolved view
+- [x] `RMI-ASSESSMENTSPEC-015` Crosswalk files: criterion IDs to control IDs, with source and licence recorded; coverage of a framework from a resolved view
   - Depends on: `RMI-ASSESSMENTSPEC-012`
-- [ ] `RMI-ASSESSMENTSPEC-016` OSCAL export as a nested module over `go-oscal`: component definitions from platform and system records
+- [x] `RMI-ASSESSMENTSPEC-016` OSCAL export as a nested module over `go-oscal`: component definitions from platform and system records
   - Depends on: `RMI-ASSESSMENTSPEC-012`
-- [ ] `RMI-ASSESSMENTSPEC-017` `assessment` CLI: `validate`, `freshness`, `view --system --audience`
+- [x] `RMI-ASSESSMENTSPEC-017` `assessment` CLI: `validate`, `freshness`, `view --system --audience`
   - Depends on: `RMI-ASSESSMENTSPEC-007`
   - Depends on: `RMI-ASSESSMENTSPEC-004`
 
@@ -70,5 +70,5 @@ are reviewed and executed by phase, and commits implementing one carry
 
 - [ ] `RMI-ASSESSMENTSPEC-018` Documentation: format reference, adoption guide for collectors and engines, multi-product walkthrough
   - Depends on: `RMI-ASSESSMENTSPEC-009`
-- [ ] `RMI-ASSESSMENTSPEC-019` v0.1 release: CHANGELOG, coverage badge, publication scan, tag after CI passes
+- [ ] `RMI-ASSESSMENTSPEC-019` v0.1 release: CHANGELOG, coverage badge, publication scan, tag the core after CI passes, then point the oscal module at that tag and tag it
   - Depends on: `RMI-ASSESSMENTSPEC-018`
