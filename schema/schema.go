@@ -20,3 +20,8 @@ var Scope []byte
 //
 //go:embed controls.schema.json
 var Controls []byte
+
+// Crosswalk is the generated schema for crosswalk.Crosswalk.
+//
+//go:embed crosswalk.schema.json
+var Crosswalk []byte

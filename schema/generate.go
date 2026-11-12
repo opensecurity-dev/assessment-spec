@@ -7,6 +7,7 @@ import (
 	"github.com/invopop/jsonschema"
 
 	"github.com/opensecurity-dev/assessment-spec/controls"
+	"github.com/opensecurity-dev/assessment-spec/crosswalk"
 	"github.com/opensecurity-dev/assessment-spec/evidence"
 	"github.com/opensecurity-dev/assessment-spec/scope"
 )
@@ -19,6 +20,7 @@ const (
 	EvidenceManifestFile = "evidence-manifest.schema.json"
 	ScopeFile            = "scope.schema.json"
 	ControlsFile         = "controls.schema.json"
+	CrosswalkFile        = "crosswalk.schema.json"
 )
 
 // GenerateEvidenceManifest builds the evidence manifest schema from the Go
@@ -44,11 +46,19 @@ func GenerateControls() ([]byte, error) {
 		"Control implementation records for systems, shared platforms and providers, with origination, inheritance, prose, evidence references and attestations.")
 }
 
+// GenerateCrosswalk builds the crosswalk schema from the Go types.
+func GenerateCrosswalk() ([]byte, error) {
+	return generate(&crosswalk.Crosswalk{}, "../crosswalk", CrosswalkFile,
+		"Crosswalk",
+		"A framework's criterion identifiers mapped to NIST SP 800-53 control IDs, with the mapping's source and licence. Identifiers only.")
+}
+
 // All maps each schema file name to its generator.
 var All = map[string]func() ([]byte, error){
 	EvidenceManifestFile: GenerateEvidenceManifest,
 	ScopeFile:            GenerateScope,
 	ControlsFile:         GenerateControls,
+	CrosswalkFile:        GenerateCrosswalk,
 }
 
 func generate(v any, srcDir, file, title, description string) ([]byte, error) {

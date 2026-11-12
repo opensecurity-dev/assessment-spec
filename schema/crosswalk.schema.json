@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/opensecurity-dev/assessment-spec/schema/crosswalk.schema.json",
+  "$ref": "#/$defs/Crosswalk",
+  "$defs": {
+    "Crosswalk": {
+      "properties": {
+        "schemaVersion": {
+          "type": "string",
+          "description": "SchemaVersion is the document format version, \"crosswalk/v1\". Optional;\nwhen absent, version 1 is assumed."
+        },
+        "framework": {
+          "type": "string",
+          "description": "Framework identifies the framework and its edition, in lowercase, such\nas \"iso-27001-2022\" or \"soc2-tsc-2017\"."
+        },
+        "source": {
+          "type": "string",
+          "description": "Source says who made the mapping, such as a publisher or \"operator\"."
+        },
+        "license": {
+          "type": "string",
+          "description": "License is the terms the mapping is shared under, as an SPDX\nidentifier or a short statement."
+        },
+        "mappings": {
+          "items": {
+            "$ref": "#/$defs/Mapping"
+          },
+          "type": "array",
+          "description": "Mappings lists each criterion and the controls that meet it."
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "framework",
+        "source",
+        "license",
+        "mappings"
+      ],
+      "description": "Crosswalk maps one framework's criteria to controls."
+    },
+    "Mapping": {
+      "properties": {
+        "criterion": {
+          "type": "string",
+          "description": "Criterion is the framework's identifier for the criterion. Identifiers\nonly: no criterion text."
+        },
+        "controls": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "description": "Controls are the NIST SP 800-53 control IDs that together meet the\ncriterion."
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "criterion",
+        "controls"
+      ],
+      "description": "Mapping is one criterion and the controls that meet it."
+    }
+  },
+  "title": "Crosswalk",
+  "description": "A framework's criterion identifiers mapped to NIST SP 800-53 control IDs, with the mapping's source and licence. Identifiers only."
+}

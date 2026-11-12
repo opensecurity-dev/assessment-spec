@@ -14,6 +14,7 @@ func TestEmbeddedSchemasAreCurrent(t *testing.T) {
 		schema.EvidenceManifestFile: schema.EvidenceManifest,
 		schema.ScopeFile:            schema.Scope,
 		schema.ControlsFile:         schema.Controls,
+		schema.CrosswalkFile:        schema.Crosswalk,
 	}
 	if len(embedded) != len(schema.All) {
 		t.Fatalf("%d embedded schemas, %d generators", len(embedded), len(schema.All))
@@ -64,6 +65,8 @@ func TestRequiredFields(t *testing.T) {
 		{schema.Controls, "Implementation", []string{"control", "origination", "scope"}},
 		{schema.Controls, "Attestation", []string{"at", "by", "verification"}},
 		{schema.Controls, "EvidenceRef", []string{"manifest"}},
+		{schema.Crosswalk, "Crosswalk", []string{"framework", "license", "mappings", "source"}},
+		{schema.Crosswalk, "Mapping", []string{"controls", "criterion"}},
 	}
 	for _, c := range cases {
 		if got := required(t, c.doc, c.def); !slices.Equal(got, c.want) {
