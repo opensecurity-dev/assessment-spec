@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "crosswalk/v1",
+  "framework": "example-framework",
+  "source": "assessment-spec example; illustrative criteria, not a real framework",
+  "license": "MIT",
+  "mappings": [
+    { "criterion": "EX-1", "controls": ["AC-2", "IA-2"] },
+    { "criterion": "EX-2", "controls": ["RA-5", "SI-2"] },
+    { "criterion": "EX-3", "controls": ["SC-7", "SC-8"] },
+    { "criterion": "EX-4", "controls": ["PE-3"] },
+    { "criterion": "EX-5", "controls": ["AU-2", "AU-6"] },
+    { "criterion": "EX-6", "controls": ["PT-2", "PT-3"] }
+  ]
+}

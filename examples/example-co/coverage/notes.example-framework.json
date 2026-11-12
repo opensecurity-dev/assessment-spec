@@ -1,0 +1,93 @@
+{
+  "framework": "example-framework",
+  "system": "notes",
+  "audience": "public",
+  "summary": {
+    "implemented": 2,
+    "partial": 3,
+    "unassessed": 1
+  },
+  "criteria": [
+    {
+      "criterion": "EX-1",
+      "status": "partial",
+      "controls": [
+        {
+          "control": "AC-2",
+          "status": "partial"
+        },
+        {
+          "control": "IA-2",
+          "status": "implemented"
+        }
+      ]
+    },
+    {
+      "criterion": "EX-2",
+      "status": "partial",
+      "controls": [
+        {
+          "control": "RA-5",
+          "status": "partial"
+        },
+        {
+          "control": "SI-2",
+          "status": "implemented"
+        }
+      ]
+    },
+    {
+      "criterion": "EX-3",
+      "status": "implemented",
+      "controls": [
+        {
+          "control": "SC-7",
+          "status": "implemented"
+        },
+        {
+          "control": "SC-8",
+          "status": "implemented"
+        }
+      ]
+    },
+    {
+      "criterion": "EX-4",
+      "status": "implemented",
+      "controls": [
+        {
+          "control": "PE-3",
+          "status": "implemented"
+        }
+      ]
+    },
+    {
+      "criterion": "EX-5",
+      "status": "unassessed",
+      "controls": [
+        {
+          "control": "AU-2",
+          "status": "unassessed"
+        },
+        {
+          "control": "AU-6",
+          "status": "unassessed",
+          "outsideBaseline": true
+        }
+      ]
+    },
+    {
+      "criterion": "EX-6",
+      "status": "partial",
+      "controls": [
+        {
+          "control": "PT-2",
+          "status": "implemented"
+        },
+        {
+          "control": "PT-3",
+          "status": "partial"
+        }
+      ]
+    }
+  ]
+}
