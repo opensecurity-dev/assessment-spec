@@ -12,13 +12,13 @@ are reviewed and executed by phase, and commits implementing one carry
 **Theme:** The record collectors and engines already exchange, public and with provenance.
 
 - [ ] `RMI-ASSESSMENTSPEC-001` Module scaffold: MIT licence, README, CI (build, tests, golangci-lint, CodeQL), lint configuration
-- [ ] `RMI-ASSESSMENTSPEC-002` Evidence manifest types and validation: required tool, generatedAt and artifactPath; optional provenance, target, mentions and control hints
+- [x] `RMI-ASSESSMENTSPEC-002` Evidence manifest types and validation: required tool, generatedAt and artifactPath; optional provenance, target, mentions and control hints
   - Depends on: `RMI-ASSESSMENTSPEC-001`
-- [ ] `RMI-ASSESSMENTSPEC-003` Evidence set loader and SHA-256 verification
+- [x] `RMI-ASSESSMENTSPEC-003` Evidence set loader and SHA-256 verification
   - Depends on: `RMI-ASSESSMENTSPEC-002`
-- [ ] `RMI-ASSESSMENTSPEC-004` Freshness: per-tool thresholds, database age limits, missing required tools, injected clock
+- [x] `RMI-ASSESSMENTSPEC-004` Freshness: per-tool thresholds, database age limits, missing required tools, injected clock
   - Depends on: `RMI-ASSESSMENTSPEC-003`
-- [ ] `RMI-ASSESSMENTSPEC-005` Generated evidence-manifest schema: embedded, currency test, `schemakit` camelCase lint
+- [x] `RMI-ASSESSMENTSPEC-005` Generated evidence-manifest schema: embedded, currency test, `schemakit` camelCase lint
   - Depends on: `RMI-ASSESSMENTSPEC-002`
 
 ## Phase 2 — Scope & Per-System Views
