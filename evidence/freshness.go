@@ -1,6 +1,7 @@
 package evidence
 
 import (
+	"encoding/json"
 	"fmt"
 	"sort"
 	"time"
@@ -55,11 +56,26 @@ func (p Policy) For(tool string) Thresholds {
 
 // ToolStatus is the freshness of one tool's most recent artifact.
 type ToolStatus struct {
-	Tool        string        `json:"tool"`
-	Status      Status        `json:"status"`
-	Reason      string        `json:"reason,omitempty"`
-	GeneratedAt time.Time     `json:"generatedAt,omitzero"`
-	Age         time.Duration `json:"age,omitempty"`
+	Tool        string    `json:"tool"`
+	Status      Status    `json:"status"`
+	Reason      string    `json:"reason,omitempty"`
+	GeneratedAt time.Time `json:"generatedAt,omitzero"`
+	// Age is the artifact's age at the report's time. In JSON it is a Go
+	// duration string, such as "54h0m0s".
+	Age time.Duration `json:"-"`
+}
+
+// MarshalJSON writes Age as a duration string rather than nanoseconds.
+func (t ToolStatus) MarshalJSON() ([]byte, error) {
+	type plain ToolStatus
+	out := struct {
+		plain
+		Age string `json:"age,omitempty"`
+	}{plain: plain(t)}
+	if t.Age != 0 {
+		out.Age = t.Age.String()
+	}
+	return json.Marshal(out)
 }
 
 // FreshnessReport is the per-tool freshness of an evidence set.
