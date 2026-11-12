@@ -107,7 +107,7 @@ func Resolve(s *scope.Scope, d *Document, view *scope.View, baseline []string) (
 		return nil, fmt.Errorf("controls: unknown system %q", view.System)
 	}
 	for _, c := range append(slices.Clone(baseline), sys.AddedControls...) {
-		if !controlPattern.MatchString(c) {
+		if !ValidControlID(c) {
 			return nil, fmt.Errorf("controls: baseline or added control %q is not a control ID", c)
 		}
 	}
@@ -186,21 +186,33 @@ func addProse(s *scope.Scope, rc *Resolved, via string, rec *Implementation, aud
 	if len(present) == 0 {
 		return
 	}
-	if aud.External() {
-		if !aud.CanSee(rec.EffectiveVisibility()) {
-			rc.Withheld = append(rc.Withheld, Withheld{Kind: "prose", Via: via, Reason: ReasonVisibility})
-			return
-		}
-		for _, t := range present {
-			for _, id := range s.DetectMentions([]byte(t.Text)) {
-				if id != self {
-					rc.Withheld = append(rc.Withheld, Withheld{Kind: "prose", Via: via, Reason: ReasonNamesOtherSystem})
-					return
-				}
+	if reason := ProseWithheld(s, *rec, aud, self); reason != "" {
+		rc.Withheld = append(rc.Withheld, Withheld{Kind: "prose", Via: via, Reason: reason})
+		return
+	}
+	rc.Statements = append(rc.Statements, present...)
+}
+
+// ProseWithheld returns why the record's prose is withheld from aud when
+// reporting on system, or "" when aud may read it. The internal audience
+// reads all prose. An external audience reads a record's prose only if its
+// visibility allows and no statement, gap or justification names another
+// system by marker.
+func ProseWithheld(s *scope.Scope, rec Implementation, aud audience.Audience, system string) string {
+	if !aud.External() {
+		return ""
+	}
+	if !aud.CanSee(rec.EffectiveVisibility()) {
+		return ReasonVisibility
+	}
+	for _, t := range []string{rec.Statement, rec.Gap, rec.Justification} {
+		for _, id := range s.DetectMentions([]byte(t)) {
+			if id != system {
+				return ReasonNamesOtherSystem
 			}
 		}
 	}
-	rc.Statements = append(rc.Statements, present...)
+	return ""
 }
 
 type contribution struct {
@@ -237,7 +249,7 @@ func (r *resolver) resolve(control, id, kind string, visiting map[string]bool) (
 		return st, append(self, contribs...), err
 	case OriginHybrid:
 		st, contribs, err := r.combine(control, rec.InheritsFrom, visiting, false)
-		return weaker(rec.Status, st), append(self, contribs...), err
+		return Weaker(rec.Status, st), append(self, contribs...), err
 	}
 	return "", nil, fmt.Errorf("controls: record %s at %q has unknown origination %q", control, id, rec.Origination)
 }
@@ -270,7 +282,7 @@ func (r *resolver) combine(control string, srcs []string, visiting map[string]bo
 		if status == "" {
 			status = st
 		} else {
-			status = weaker(status, st)
+			status = Weaker(status, st)
 		}
 	}
 	if status == "" {
@@ -279,9 +291,9 @@ func (r *resolver) combine(control string, srcs []string, visiting map[string]bo
 	return status, contribs, nil
 }
 
-// weaker returns the weaker of two statuses. Not-applicable yields to any
-// other status.
-func weaker(a, b Status) Status {
+// Weaker returns the weaker of two statuses. Not-applicable yields to any
+// other status, so it results only when both are not-applicable.
+func Weaker(a, b Status) Status {
 	switch {
 	case a == StatusNotApplicable:
 		return b

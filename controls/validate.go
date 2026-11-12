@@ -16,6 +16,10 @@ var (
 	sha256Hex      = regexp.MustCompile(`^[0-9a-f]{64}$`)
 )
 
+// ValidControlID reports whether id is a NIST SP 800-53 control or
+// enhancement ID, such as "AC-2" or "SC-7(5)".
+func ValidControlID(id string) bool { return controlPattern.MatchString(id) }
+
 // Validate checks every record against the scope and returns every problem,
 // joined: control IDs, known scopes, status and origination rules, required
 // gaps and justifications, permitted inheritance sources, attestations and
@@ -29,7 +33,7 @@ func (d *Document) Validate(s *scope.Scope) error {
 	seen := map[string]bool{}
 	for _, r := range d.Records {
 		where := fmt.Sprintf("%s at %q", r.Control, r.Scope)
-		if !controlPattern.MatchString(r.Control) {
+		if !ValidControlID(r.Control) {
 			add("record %s: control %q is not a control ID such as AC-2 or SC-7(5)", where, r.Control)
 		}
 		kind := s.KindOf(r.Scope)

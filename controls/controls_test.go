@@ -329,3 +329,38 @@ func TestControlOrder(t *testing.T) {
 		t.Fatalf("order = %v, want %v", got, want)
 	}
 }
+
+func TestWeaker(t *testing.T) {
+	cases := []struct{ a, b, want controls.Status }{
+		{controls.StatusImplemented, controls.StatusPartial, controls.StatusPartial},
+		{controls.StatusPlanned, controls.StatusAlternative, controls.StatusPlanned},
+		{controls.StatusNotApplicable, controls.StatusPlanned, controls.StatusPlanned},
+		{controls.StatusImplemented, controls.StatusNotApplicable, controls.StatusImplemented},
+		{controls.StatusNotApplicable, controls.StatusNotApplicable, controls.StatusNotApplicable},
+		{controls.StatusUnassessed, controls.StatusImplemented, controls.StatusUnassessed},
+	}
+	for _, c := range cases {
+		if got := controls.Weaker(c.a, c.b); got != c.want {
+			t.Errorf("Weaker(%s, %s) = %s, want %s", c.a, c.b, got, c.want)
+		}
+	}
+}
+
+func TestProseWithheld(t *testing.T) {
+	e := loadExample(t)
+	rec := controls.Implementation{Statement: "Serves notes.example.test and ledger.example.test.", Visibility: audience.Public}
+	if got := controls.ProseWithheld(e.scope, rec, audience.Public, "notes"); got != controls.ReasonNamesOtherSystem {
+		t.Errorf("names ledger: got %q", got)
+	}
+	if got := controls.ProseWithheld(e.scope, rec, audience.Internal, "notes"); got != "" {
+		t.Errorf("internal: got %q", got)
+	}
+	rec.Statement = "Serves notes.example.test."
+	if got := controls.ProseWithheld(e.scope, rec, audience.Public, "notes"); got != "" {
+		t.Errorf("names only itself: got %q", got)
+	}
+	rec.Visibility = audience.NDA
+	if got := controls.ProseWithheld(e.scope, rec, audience.Public, "notes"); got != controls.ReasonVisibility {
+		t.Errorf("nda record to public: got %q", got)
+	}
+}
