@@ -9,7 +9,7 @@ the platform it shares, without learning about the other product.
 Install the CLI, then run the commands from the example directory:
 
 ```bash
-go install github.com/opensecurity-dev/assessment-spec/cmd/assessment@latest
+go install github.com/opensecurity-dev/assessment-spec/cmd/assessment@v0.1.0
 cd examples/example-co
 ```
 

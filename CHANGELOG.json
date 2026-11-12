@@ -1,0 +1,134 @@
+{
+  "irVersion": "1.0",
+  "project": "assessment-spec",
+  "repository": "https://github.com/opensecurity-dev/assessment-spec",
+  "versioning": "semver",
+  "commitConvention": "conventional",
+  "maintainers": [
+    "grokify"
+  ],
+  "releases": [
+    {
+      "version": "v0.1.0",
+      "date": "2026-11-12",
+      "highlights": [
+        {
+          "description": "A framework-neutral format for assessment records: evidence manifests, a scope of providers, shared platforms and products, control implementation records, and crosswalks"
+        },
+        {
+          "description": "Several separately marketed products on one shared platform: a platform control is recorded once and inherited by each product, and each product gets its own assessment"
+        },
+        {
+          "description": "Per-product, per-audience views and resolutions that withhold anything naming another product, with the reason, so public and NDA outputs cannot disclose the others"
+        },
+        {
+          "description": "`assessment` CLI and an OSCAL component definition export"
+        }
+      ],
+      "added": [
+        {
+          "description": "`evidence` package: the evidence manifest, its validation, set loading and SHA-256 verification",
+          "commit": "921b9fe"
+        },
+        {
+          "description": "Evidence freshness per tool, by artifact age and vulnerability-database age, with ages written as duration strings",
+          "commit": "c1e3af4"
+        },
+        {
+          "description": "`mentions` distinguishes an artifact that names no system (`[]`) from one whose collector declared nothing (absent)",
+          "commit": "0c31c0a"
+        },
+        {
+          "description": "`audience` package: public, NDA and internal, ordered",
+          "commit": "0cf4655"
+        },
+        {
+          "description": "`scope` package: organization, providers, shared platforms, systems and components, with validation",
+          "commit": "862ab06"
+        },
+        {
+          "description": "Per-system evidence views for each audience, withholding artifacts that name other systems or whose mentions are undeclared",
+          "commit": "f5b61f6"
+        },
+        {
+          "description": "System markers, mention detection in any text, and a check for artifacts naming systems their manifests omit",
+          "commit": "1d10a0b"
+        },
+        {
+          "description": "`controls` package: implementation records with status, origination, inheritance, prose, evidence, findings, attestations and visibility",
+          "commit": "2eecc0f"
+        },
+        {
+          "description": "Control resolution: a system's effective status for a baseline plus its added controls, with the contributing records, the weakest verification, and audience-filtered prose, evidence and findings",
+          "commit": "a6930c3"
+        },
+        {
+          "description": "`controls.LoadBaseline` for baseline files",
+          "commit": "d669a70"
+        },
+        {
+          "description": "`crosswalk` package: criterion identifiers mapped to control IDs with source and licence, and a system's coverage of a framework",
+          "commit": "dcc663f"
+        },
+        {
+          "description": "`schema` package: generated, embedded schemas for the evidence manifest, scope, controls and crosswalk",
+          "commit": "3d24969"
+        },
+        {
+          "description": "`assessment` CLI with `validate`, `freshness`, `view`, `resolve` and `coverage`",
+          "commit": "cb988d4"
+        },
+        {
+          "description": "`oscal` module: an OSCAL 1.2.3 component definition per system and audience, with stable UUIDs and effective status for inherited and hybrid records",
+          "commit": "23084bb"
+        }
+      ],
+      "tests": [
+        {
+          "description": "Example organization with two products on one platform, and golden views, resolutions, coverage and OSCAL exports for each",
+          "commit": "d078145"
+        },
+        {
+          "description": "OSCAL exports validated against the OSCAL schema",
+          "commit": "f64adf6"
+        },
+        {
+          "description": "CLI output checked against the golden files",
+          "commit": "ea2ac31"
+        }
+      ],
+      "documentation": [
+        {
+          "description": "PRD, TRD, plan and roadmap",
+          "commit": "2b004b6"
+        },
+        {
+          "description": "Format reference",
+          "commit": "f82cf7f"
+        },
+        {
+          "description": "Adoption guides for collectors and engines",
+          "commit": "9bcb432"
+        },
+        {
+          "description": "Walkthrough of two products on one platform",
+          "commit": "89a8e81"
+        },
+        {
+          "description": "Sources and licensing",
+          "commit": "d05f6fb"
+        }
+      ],
+      "build": [
+        {
+          "description": "CI with the shared Go workflows: tests across Linux, macOS and Windows, golangci-lint and CodeQL",
+          "commit": "aa07c56"
+        },
+        {
+          "description": "CI for the oscal module",
+          "commit": "895ec14"
+        }
+      ]
+    }
+  ]
+}

@@ -3,6 +3,7 @@
 [![Go CI][go-ci-svg]][go-ci-url]
 [![Go Lint][go-lint-svg]][go-lint-url]
 [![Go SAST][go-sast-svg]][go-sast-url]
+[![Coverage][coverage-svg]][coverage-url]
 [![Docs][docs-godoc-svg]][docs-godoc-url]
 [![License][license-svg]][license-url]
 
@@ -12,6 +13,8 @@
  [go-lint-url]: https://github.com/opensecurity-dev/assessment-spec/actions/workflows/go-lint.yaml
  [go-sast-svg]: https://github.com/opensecurity-dev/assessment-spec/actions/workflows/go-sast-codeql.yaml/badge.svg?branch=main
  [go-sast-url]: https://github.com/opensecurity-dev/assessment-spec/actions/workflows/go-sast-codeql.yaml
+ [coverage-svg]: https://img.shields.io/badge/coverage-91.3%25-brightgreen
+ [coverage-url]: https://github.com/opensecurity-dev/assessment-spec
  [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/opensecurity-dev/assessment-spec
  [docs-godoc-url]: https://pkg.go.dev/github.com/opensecurity-dev/assessment-spec
  [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
@@ -31,21 +34,20 @@ the others.
 
 ## Status
 
-Early development. Available now:
+v0.1.0. The format is versioned (`evidence-manifest/v1`, `scope/v1`,
+`controls/v1`, `crosswalk/v1`); fields may still be added before v1.0.0.
 
 - **`evidence`:** the evidence manifest, set loading, SHA-256 verification and
   freshness (artifact age and vulnerability-database age, per tool).
 - **`scope`:** the scope document (providers, shared platforms, systems),
-  validation of it and of evidence against it, and per-system views for each
-  audience.
-- **`scope` markers:** distinctive strings per system, mention detection in
-  any text, and a check for artifacts that name systems they do not declare.
+  validation of it and of evidence against it, per-system views for each
+  audience, and markers that detect which systems content names.
 - **`controls`:** implementation records for systems, platforms and
   providers, validated against the scope, and resolution into each system's
   effective status for an audience.
-- **`audience`:** public, NDA and internal.
 - **`crosswalk`:** framework criterion IDs mapped to control IDs, and a
   system's coverage of a framework from its resolution.
+- **`audience`:** public, NDA and internal.
 - **`schema`:** the generated, embedded evidence manifest, scope, controls
   and crosswalk schemas.
 - **`cmd/assessment`:** a CLI to validate the documents and print views,
@@ -53,8 +55,8 @@ Early development. Available now:
 - **`oscal`** (a separate module): OSCAL component definitions per system
   and audience.
 
-Documentation and a first release follow; see the
-[roadmap](docs/specs/initiatives/INIT-ASSESSMENTSPEC-001/ROADMAP.md).
+See the [CHANGELOG](CHANGELOG.md) and the
+[v0.1.0 release notes](docs/releases/v0.1.0.md).
 
 ## Evidence manifest
 
@@ -185,7 +187,7 @@ cd, err := oscal.ComponentDefinition(s, doc, view, oscal.Options{
 ## CLI
 
 ```bash
-go install github.com/opensecurity-dev/assessment-spec/cmd/assessment@latest
+go install github.com/opensecurity-dev/assessment-spec/cmd/assessment@v0.1.0
 
 assessment validate --scope scope.json --evidence evidence --controls controls.json --crosswalk iso.json
 assessment freshness --evidence evidence --require govulncheck --require syft
