@@ -1,0 +1,4 @@
+{
+  "description": "An illustrative subset of the NIST SP 800-53 Rev 5 Low baseline for the example. A real resolution takes the baseline from a catalog.",
+  "controls": ["AC-2", "AU-2", "CM-6", "CP-9", "IA-2", "PE-3", "RA-5", "SC-7", "SC-8", "SI-2"]
+}

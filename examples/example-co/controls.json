@@ -1,0 +1,139 @@
+{
+  "schemaVersion": "controls/v1",
+  "records": [
+    {
+      "control": "PE-3",
+      "scope": "example-cloud",
+      "status": "implemented",
+      "origination": "system-specific",
+      "statement": "Physical access to the data centres is controlled by Example Cloud.",
+      "visibility": "public",
+      "attestations": [{ "by": "Operator", "role": "operator", "at": "2026-02-02", "verification": "reviewed" }]
+    },
+    {
+      "control": "CP-9",
+      "scope": "example-cloud",
+      "status": "implemented",
+      "origination": "system-specific",
+      "statement": "The managed database service takes daily backups and keeps them for seven days.",
+      "visibility": "public",
+      "attestations": [{ "by": "Operator", "role": "operator", "at": "2026-02-02", "verification": "reviewed" }]
+    },
+    {
+      "control": "CP-9",
+      "scope": "shared-hosting",
+      "origination": "inherited",
+      "inheritsFrom": ["example-cloud"],
+      "statement": "Database backups are the managed database service's automated backups.",
+      "visibility": "public",
+      "attestations": [{ "by": "Operator", "role": "operator", "at": "2026-02-02", "verification": "reviewed" }]
+    },
+    {
+      "control": "SI-2",
+      "scope": "shared-hosting",
+      "status": "implemented",
+      "origination": "system-specific",
+      "statement": "The host applies security updates automatically, and a release is rebuilt when a reachable vulnerability is fixed.",
+      "evidence": [{ "manifest": "platform-benchmark.manifest.json" }],
+      "visibility": "public",
+      "attestations": [{ "by": "Operator", "role": "operator", "at": "2026-02-02", "verification": "verified" }]
+    },
+    {
+      "control": "RA-5",
+      "scope": "shared-hosting",
+      "status": "partial",
+      "origination": "system-specific",
+      "statement": "Each release is scanned for reachable vulnerabilities before it is deployed.",
+      "gap": "Weekly re-scans of deployed releases are not yet scheduled.",
+      "evidence": [{ "manifest": "platform-benchmark.manifest.json" }],
+      "findings": ["FIND-0007"],
+      "visibility": "nda"
+    },
+    {
+      "control": "RA-5",
+      "scope": "notes",
+      "status": "implemented",
+      "origination": "hybrid",
+      "inheritsFrom": ["shared-hosting"],
+      "statement": "The Notes release is scanned in source and binary mode, with a VEX statement for each unreachable vulnerability.",
+      "evidence": [{ "manifest": "notes-govulncheck.manifest.json" }],
+      "visibility": "public"
+    },
+    {
+      "control": "AC-2",
+      "scope": "shared-hosting",
+      "status": "implemented",
+      "origination": "system-specific",
+      "statement": "Operator accounts are individual and reviewed each quarter.",
+      "visibility": "public"
+    },
+    {
+      "control": "AC-2",
+      "scope": "notes",
+      "status": "partial",
+      "origination": "hybrid",
+      "inheritsFrom": ["shared-hosting"],
+      "statement": "Family administrators manage their own family's accounts.",
+      "gap": "A periodic review of family administrator accounts is not yet scheduled.",
+      "visibility": "public"
+    },
+    {
+      "control": "SC-7",
+      "scope": "shared-hosting",
+      "status": "implemented",
+      "origination": "system-specific",
+      "statement": "Web traffic reaches the server only through the CDN, whose address ranges are the only ones the firewall admits on the web port.",
+      "evidence": [{ "manifest": "platform-proxy-config.manifest.json" }, { "manifest": "platform-benchmark.manifest.json" }],
+      "visibility": "public"
+    },
+    {
+      "control": "SC-8",
+      "scope": "shared-hosting",
+      "status": "implemented",
+      "origination": "system-specific",
+      "statement": "TLS terminates at the CDN and again at the reverse proxy for notes.example.test and ledger.example.test.",
+      "visibility": "public"
+    },
+    {
+      "control": "CM-6",
+      "scope": "shared-hosting",
+      "status": "planned",
+      "origination": "system-specific",
+      "gap": "The CIS host profile is not yet applied; the first scan lists nine failures.",
+      "evidence": [{ "manifest": "platform-host-scan.manifest.json" }]
+    },
+    {
+      "control": "IA-2",
+      "scope": "notes",
+      "status": "implemented",
+      "origination": "system-specific",
+      "statement": "Sign-in goes through the organization's OIDC service, with multi-factor authentication for administrators.",
+      "visibility": "public"
+    },
+    {
+      "control": "IA-2",
+      "scope": "ledger",
+      "status": "planned",
+      "origination": "system-specific",
+      "gap": "Multi-factor authentication for administrators is planned.",
+      "visibility": "nda"
+    },
+    {
+      "control": "PT-2",
+      "scope": "notes",
+      "status": "implemented",
+      "origination": "system-specific",
+      "statement": "Notes processes a child's data only with a parent's consent.",
+      "visibility": "public"
+    },
+    {
+      "control": "PT-3",
+      "scope": "notes",
+      "status": "partial",
+      "origination": "system-specific",
+      "statement": "Each purpose of processing is listed in the privacy notice.",
+      "gap": "Purposes are not yet checked against the data each feature collects.",
+      "visibility": "nda"
+    }
+  ]
+}

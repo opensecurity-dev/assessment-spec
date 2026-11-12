@@ -1,0 +1,182 @@
+{
+  "system": "ledger",
+  "audience": "public",
+  "summary": {
+    "implemented": 6,
+    "partial": 1,
+    "planned": 2,
+    "unassessed": 1
+  },
+  "controls": [
+    {
+      "control": "AC-2",
+      "status": "implemented",
+      "via": [
+        "platform:shared-hosting"
+      ],
+      "verification": "unverified",
+      "statements": [
+        {
+          "via": "platform:shared-hosting",
+          "kind": "statement",
+          "text": "Operator accounts are individual and reviewed each quarter."
+        }
+      ]
+    },
+    {
+      "control": "AU-2",
+      "status": "unassessed",
+      "via": [],
+      "verification": "unverified"
+    },
+    {
+      "control": "CM-6",
+      "status": "planned",
+      "via": [
+        "platform:shared-hosting"
+      ],
+      "verification": "unverified",
+      "withheld": [
+        {
+          "kind": "prose",
+          "via": "platform:shared-hosting",
+          "reason": "visibility"
+        },
+        {
+          "kind": "evidence",
+          "via": "platform:shared-hosting",
+          "ref": "platform-host-scan.manifest.json",
+          "reason": "mentions-undeclared"
+        }
+      ]
+    },
+    {
+      "control": "CP-9",
+      "status": "implemented",
+      "via": [
+        "platform:shared-hosting",
+        "provider:example-cloud"
+      ],
+      "verification": "reviewed",
+      "statements": [
+        {
+          "via": "platform:shared-hosting",
+          "kind": "statement",
+          "text": "Database backups are the managed database service's automated backups."
+        },
+        {
+          "via": "provider:example-cloud",
+          "kind": "statement",
+          "text": "The managed database service takes daily backups and keeps them for seven days."
+        }
+      ]
+    },
+    {
+      "control": "IA-2",
+      "status": "planned",
+      "via": [
+        "system:ledger"
+      ],
+      "verification": "unverified",
+      "withheld": [
+        {
+          "kind": "prose",
+          "via": "system:ledger",
+          "reason": "visibility"
+        }
+      ]
+    },
+    {
+      "control": "PE-3",
+      "status": "implemented",
+      "via": [
+        "provider:example-cloud"
+      ],
+      "verification": "reviewed",
+      "statements": [
+        {
+          "via": "provider:example-cloud",
+          "kind": "statement",
+          "text": "Physical access to the data centres is controlled by Example Cloud."
+        }
+      ]
+    },
+    {
+      "control": "RA-5",
+      "status": "partial",
+      "via": [
+        "platform:shared-hosting"
+      ],
+      "verification": "unverified",
+      "evidence": [
+        "platform-benchmark.manifest.json"
+      ],
+      "withheld": [
+        {
+          "kind": "prose",
+          "via": "platform:shared-hosting",
+          "reason": "visibility"
+        }
+      ]
+    },
+    {
+      "control": "SC-7",
+      "status": "implemented",
+      "via": [
+        "platform:shared-hosting"
+      ],
+      "verification": "unverified",
+      "statements": [
+        {
+          "via": "platform:shared-hosting",
+          "kind": "statement",
+          "text": "Web traffic reaches the server only through the CDN, whose address ranges are the only ones the firewall admits on the web port."
+        }
+      ],
+      "evidence": [
+        "platform-benchmark.manifest.json"
+      ],
+      "withheld": [
+        {
+          "kind": "evidence",
+          "via": "platform:shared-hosting",
+          "ref": "platform-proxy-config.manifest.json",
+          "reason": "names-other-systems"
+        }
+      ]
+    },
+    {
+      "control": "SC-8",
+      "status": "implemented",
+      "via": [
+        "platform:shared-hosting"
+      ],
+      "verification": "unverified",
+      "withheld": [
+        {
+          "kind": "prose",
+          "via": "platform:shared-hosting",
+          "reason": "names-other-systems"
+        }
+      ]
+    },
+    {
+      "control": "SI-2",
+      "status": "implemented",
+      "via": [
+        "platform:shared-hosting"
+      ],
+      "verification": "verified",
+      "statements": [
+        {
+          "via": "platform:shared-hosting",
+          "kind": "statement",
+          "text": "The host applies security updates automatically, and a release is rebuilt when a reachable vulnerability is fixed."
+        }
+      ],
+      "evidence": [
+        "platform-benchmark.manifest.json"
+      ]
+    }
+  ]
+}

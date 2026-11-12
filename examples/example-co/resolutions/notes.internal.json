@@ -1,0 +1,239 @@
+{
+  "system": "notes",
+  "audience": "internal",
+  "summary": {
+    "implemented": 7,
+    "partial": 3,
+    "planned": 1,
+    "unassessed": 2
+  },
+  "controls": [
+    {
+      "control": "AC-2",
+      "status": "partial",
+      "via": [
+        "system:notes",
+        "platform:shared-hosting"
+      ],
+      "verification": "unverified",
+      "statements": [
+        {
+          "via": "system:notes",
+          "kind": "statement",
+          "text": "Family administrators manage their own family's accounts."
+        },
+        {
+          "via": "system:notes",
+          "kind": "gap",
+          "text": "A periodic review of family administrator accounts is not yet scheduled."
+        },
+        {
+          "via": "platform:shared-hosting",
+          "kind": "statement",
+          "text": "Operator accounts are individual and reviewed each quarter."
+        }
+      ]
+    },
+    {
+      "control": "AU-2",
+      "status": "unassessed",
+      "via": [],
+      "verification": "unverified"
+    },
+    {
+      "control": "CM-6",
+      "status": "planned",
+      "via": [
+        "platform:shared-hosting"
+      ],
+      "verification": "unverified",
+      "statements": [
+        {
+          "via": "platform:shared-hosting",
+          "kind": "gap",
+          "text": "The CIS host profile is not yet applied; the first scan lists nine failures."
+        }
+      ],
+      "evidence": [
+        "platform-host-scan.manifest.json"
+      ]
+    },
+    {
+      "control": "CP-9",
+      "status": "implemented",
+      "via": [
+        "platform:shared-hosting",
+        "provider:example-cloud"
+      ],
+      "verification": "reviewed",
+      "statements": [
+        {
+          "via": "platform:shared-hosting",
+          "kind": "statement",
+          "text": "Database backups are the managed database service's automated backups."
+        },
+        {
+          "via": "provider:example-cloud",
+          "kind": "statement",
+          "text": "The managed database service takes daily backups and keeps them for seven days."
+        }
+      ]
+    },
+    {
+      "control": "IA-2",
+      "status": "implemented",
+      "via": [
+        "system:notes"
+      ],
+      "verification": "unverified",
+      "statements": [
+        {
+          "via": "system:notes",
+          "kind": "statement",
+          "text": "Sign-in goes through the organization's OIDC service, with multi-factor authentication for administrators."
+        }
+      ]
+    },
+    {
+      "control": "PE-3",
+      "status": "implemented",
+      "via": [
+        "provider:example-cloud"
+      ],
+      "verification": "reviewed",
+      "statements": [
+        {
+          "via": "provider:example-cloud",
+          "kind": "statement",
+          "text": "Physical access to the data centres is controlled by Example Cloud."
+        }
+      ]
+    },
+    {
+      "control": "PT-2",
+      "status": "implemented",
+      "via": [
+        "system:notes"
+      ],
+      "verification": "unverified",
+      "statements": [
+        {
+          "via": "system:notes",
+          "kind": "statement",
+          "text": "Notes processes a child's data only with a parent's consent."
+        }
+      ]
+    },
+    {
+      "control": "PT-3",
+      "status": "partial",
+      "via": [
+        "system:notes"
+      ],
+      "verification": "unverified",
+      "statements": [
+        {
+          "via": "system:notes",
+          "kind": "statement",
+          "text": "Each purpose of processing is listed in the privacy notice."
+        },
+        {
+          "via": "system:notes",
+          "kind": "gap",
+          "text": "Purposes are not yet checked against the data each feature collects."
+        }
+      ]
+    },
+    {
+      "control": "PT-5",
+      "status": "unassessed",
+      "via": [],
+      "verification": "unverified"
+    },
+    {
+      "control": "RA-5",
+      "status": "partial",
+      "via": [
+        "system:notes",
+        "platform:shared-hosting"
+      ],
+      "verification": "unverified",
+      "statements": [
+        {
+          "via": "system:notes",
+          "kind": "statement",
+          "text": "The Notes release is scanned in source and binary mode, with a VEX statement for each unreachable vulnerability."
+        },
+        {
+          "via": "platform:shared-hosting",
+          "kind": "statement",
+          "text": "Each release is scanned for reachable vulnerabilities before it is deployed."
+        },
+        {
+          "via": "platform:shared-hosting",
+          "kind": "gap",
+          "text": "Weekly re-scans of deployed releases are not yet scheduled."
+        }
+      ],
+      "evidence": [
+        "notes-govulncheck.manifest.json",
+        "platform-benchmark.manifest.json"
+      ],
+      "findings": [
+        "FIND-0007"
+      ]
+    },
+    {
+      "control": "SC-7",
+      "status": "implemented",
+      "via": [
+        "platform:shared-hosting"
+      ],
+      "verification": "unverified",
+      "statements": [
+        {
+          "via": "platform:shared-hosting",
+          "kind": "statement",
+          "text": "Web traffic reaches the server only through the CDN, whose address ranges are the only ones the firewall admits on the web port."
+        }
+      ],
+      "evidence": [
+        "platform-proxy-config.manifest.json",
+        "platform-benchmark.manifest.json"
+      ]
+    },
+    {
+      "control": "SC-8",
+      "status": "implemented",
+      "via": [
+        "platform:shared-hosting"
+      ],
+      "verification": "unverified",
+      "statements": [
+        {
+          "via": "platform:shared-hosting",
+          "kind": "statement",
+          "text": "TLS terminates at the CDN and again at the reverse proxy for notes.example.test and ledger.example.test."
+        }
+      ]
+    },
+    {
+      "control": "SI-2",
+      "status": "implemented",
+      "via": [
+        "platform:shared-hosting"
+      ],
+      "verification": "verified",
+      "statements": [
+        {
+          "via": "platform:shared-hosting",
+          "kind": "statement",
+          "text": "The host applies security updates automatically, and a release is rebuilt when a reachable vulnerability is fixed."
+        }
+      ],
+      "evidence": [
+        "platform-benchmark.manifest.json"
+      ]
+    }
+  ]
+}
