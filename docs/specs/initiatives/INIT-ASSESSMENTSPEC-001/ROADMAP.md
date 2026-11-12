@@ -25,15 +25,15 @@ are reviewed and executed by phase, and commits implementing one carry
 
 **Theme:** Several products on one platform, each assessed on its own.
 
-- [ ] `RMI-ASSESSMENTSPEC-006` Scope types: organization, providers, platforms, systems, components, baselines, added controls, disclosure; referential validation
+- [x] `RMI-ASSESSMENTSPEC-006` Scope types: organization, providers, platforms, systems, components, baselines, added controls, disclosure; referential validation
   - Depends on: `RMI-ASSESSMENTSPEC-002`
-- [ ] `RMI-ASSESSMENTSPEC-007` Audience-filtered views: a system's own, platform and provider evidence, with artifacts naming other systems withheld from public and NDA views and listed with the reason
+- [x] `RMI-ASSESSMENTSPEC-007` Audience-filtered views: a system's own, platform and provider evidence, with artifacts naming other systems withheld from public and NDA views and listed with the reason
   - Depends on: `RMI-ASSESSMENTSPEC-006`
-- [ ] `RMI-ASSESSMENTSPEC-008` Generated scope schema with currency and lint tests
+- [x] `RMI-ASSESSMENTSPEC-008` Generated scope schema with currency and lint tests
   - Depends on: `RMI-ASSESSMENTSPEC-006`
-- [ ] `RMI-ASSESSMENTSPEC-009` Synthetic example organization: one platform, two systems, one provider, golden views per system and audience
+- [x] `RMI-ASSESSMENTSPEC-009` Synthetic example organization: one platform, two systems, one provider, golden views per system and audience
   - Depends on: `RMI-ASSESSMENTSPEC-007`
-- [ ] `RMI-ASSESSMENTSPEC-010` Audience type shared in meaning with `security-docs-spec`: public, NDA, internal
+- [x] `RMI-ASSESSMENTSPEC-010` Audience type shared in meaning with `security-docs-spec`: public, NDA, internal
   - Depends on: `RMI-ASSESSMENTSPEC-001`
 
 ## Phase 3 — Control Records & Inheritance
