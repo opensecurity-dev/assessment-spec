@@ -40,15 +40,17 @@ are reviewed and executed by phase, and commits implementing one carry
 
 **Theme:** A control implemented once on the platform is inherited by every system on it.
 
-- [ ] `RMI-ASSESSMENTSPEC-011` Control implementation and attestation types: status, origination, inheritance, statement, gap, justification, evidence and finding references
+- [x] `RMI-ASSESSMENTSPEC-011` Control implementation and attestation types: status, origination, inheritance, statement, gap, justification, evidence and finding references
   - Depends on: `RMI-ASSESSMENTSPEC-006`
-- [ ] `RMI-ASSESSMENTSPEC-012` Inheritance resolution: effective status per system, hybrid takes the weaker status, no record is unassessed
+- [x] `RMI-ASSESSMENTSPEC-012` Inheritance resolution: effective status per system, hybrid takes the weaker status, no record is unassessed
   - Depends on: `RMI-ASSESSMENTSPEC-011`
-- [ ] `RMI-ASSESSMENTSPEC-013` Findings and evidence in the resolved view, with the same mentions filtering as evidence
+- [x] `RMI-ASSESSMENTSPEC-013` Findings and evidence in the resolved view, with the same mentions filtering as evidence
   - Depends on: `RMI-ASSESSMENTSPEC-012`
   - Depends on: `RMI-ASSESSMENTSPEC-007`
-- [ ] `RMI-ASSESSMENTSPEC-014` Generated controls schema with currency and lint tests
+- [x] `RMI-ASSESSMENTSPEC-014` Generated controls schema with currency and lint tests
   - Depends on: `RMI-ASSESSMENTSPEC-011`
+- [x] `RMI-ASSESSMENTSPEC-020` System markers and mention detection: distinctive strings per system, detection in text, and a check that reports artifacts naming systems their manifests do not declare
+  - Depends on: `RMI-ASSESSMENTSPEC-006`
 
 ## Phase 4 — Interoperability
 
