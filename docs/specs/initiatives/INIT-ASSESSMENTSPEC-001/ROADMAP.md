@@ -68,7 +68,7 @@ are reviewed and executed by phase, and commits implementing one carry
 
 **Theme:** Usable by a collector and an engine that did not write it.
 
-- [ ] `RMI-ASSESSMENTSPEC-018` Documentation: format reference, adoption guide for collectors and engines, multi-product walkthrough
+- [x] `RMI-ASSESSMENTSPEC-018` Documentation: format reference, adoption guide for collectors and engines, multi-product walkthrough
   - Depends on: `RMI-ASSESSMENTSPEC-009`
-- [ ] `RMI-ASSESSMENTSPEC-019` v0.1 release: CHANGELOG, coverage badge, publication scan, tag the core after CI passes, then point the oscal module at that tag and tag it
+- [ ] `RMI-ASSESSMENTSPEC-019` v0.1 release: CHANGELOG, coverage badge, publication scan, tag the core and the oscal module after CI passes
   - Depends on: `RMI-ASSESSMENTSPEC-018`
