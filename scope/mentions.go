@@ -10,7 +10,7 @@ import (
 	"github.com/opensecurity-dev/assessment-spec/evidence"
 )
 
-// DetectMentions returns the IDs of the systems, in document order, whose
+// DetectMentions returns the IDs of the systems, in scope order, whose
 // markers appear in content, ignoring case. A system with no markers is never
 // detected.
 func (s *Scope) DetectMentions(content []byte) []string {
