@@ -364,3 +364,27 @@ func TestProseWithheld(t *testing.T) {
 		t.Errorf("nda record to public: got %q", got)
 	}
 }
+
+func TestLoadBaseline(t *testing.T) {
+	base, err := controls.LoadBaseline(filepath.Join(exampleDir, "baseline.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(base.Controls) != 10 || base.Controls[0] != "AC-2" {
+		t.Errorf("got %v", base.Controls)
+	}
+	dir := t.TempDir()
+	for name, body := range map[string]string{
+		"empty":   `{"controls":[]}`,
+		"bad-id":  `{"controls":["AC-2","ac-3"]}`,
+		"unknown": `{"controls":["AC-2"],"profile":"low"}`,
+	} {
+		path := filepath.Join(dir, name+".json")
+		if err := os.WriteFile(path, []byte(body), 0o600); err != nil {
+			t.Fatal(err)
+		}
+		if _, err := controls.LoadBaseline(path); err == nil {
+			t.Errorf("%s: want an error", name)
+		}
+	}
+}
