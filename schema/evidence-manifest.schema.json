@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/opensecurity-dev/assessment-spec/schema/evidence-manifest.schema.json",
+  "$ref": "#/$defs/Manifest",
+  "$defs": {
+    "Manifest": {
+      "properties": {
+        "schemaVersion": {
+          "type": "string",
+          "description": "SchemaVersion is the manifest format version, \"evidence-manifest/v1\".\nOptional; when absent, version 1 is assumed."
+        },
+        "tool": {
+          "type": "string",
+          "description": "Tool is the program that produced the artifact, such as \"govulncheck\"."
+        },
+        "toolVersion": {
+          "type": "string",
+          "description": "ToolVersion is the tool's version string."
+        },
+        "generatedAt": {
+          "type": "string",
+          "description": "GeneratedAt is when the artifact was produced, in RFC 3339."
+        },
+        "databaseUpdatedAt": {
+          "type": "string",
+          "description": "DatabaseUpdatedAt is when the tool's vulnerability database or rule set\nwas last updated, in RFC 3339, for tools that have one."
+        },
+        "artifactPath": {
+          "type": "string",
+          "description": "ArtifactPath is the artifact file, relative to the manifest's directory."
+        },
+        "sha256": {
+          "type": "string",
+          "description": "SHA256 is the lowercase hex SHA-256 of the artifact."
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "sbom",
+            "vex",
+            "findings",
+            "scan-report",
+            "config-snapshot",
+            "benchmark",
+            "attestation",
+            "other"
+          ],
+          "description": "Kind classifies the artifact."
+        },
+        "mediaType": {
+          "type": "string",
+          "description": "MediaType is the artifact's media type, such as\n\"application/vnd.cyclonedx+json\"."
+        },
+        "target": {
+          "$ref": "#/$defs/Target",
+          "description": "Target is what the artifact is about."
+        },
+        "mentions": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "description": "Mentions lists the IDs of systems whose names appear in the artifact's\ncontent, so views can withhold it from other systems' audiences."
+        },
+        "controls": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "description": "Controls lists control IDs the artifact supports, as a hint; a\ncompliance engine decides what it supports."
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "tool",
+        "generatedAt",
+        "artifactPath"
+      ],
+      "description": "Manifest is the metadata a collector writes once beside each evidence artifact."
+    },
+    "Target": {
+      "properties": {
+        "system": {
+          "type": "string",
+          "description": "System is the ID of a system (a product) in the scope document."
+        },
+        "platform": {
+          "type": "string",
+          "description": "Platform is the ID of a shared platform in the scope document."
+        },
+        "components": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "description": "Components lists component IDs within the system or platform."
+        },
+        "revision": {
+          "type": "string",
+          "description": "Revision is the source revision or release the artifact describes."
+        },
+        "environment": {
+          "type": "string",
+          "description": "Environment is the deployment environment, such as \"staging\" or \"prod\"."
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "description": "Target identifies what an artifact is about."
+    }
+  },
+  "title": "Evidence manifest",
+  "description": "Metadata a collector writes once beside each evidence artifact: provenance, freshness inputs, scope and integrity."
+}
