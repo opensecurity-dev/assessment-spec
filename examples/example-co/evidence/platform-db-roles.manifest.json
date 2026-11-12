@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "evidence-manifest/v1",
+  "tool": "db-role-export",
+  "toolVersion": "v1.0.0",
+  "generatedAt": "2026-02-01T06:00:00Z",
+  "artifactPath": "platform-db-roles.txt",
+  "sha256": "f01304f2723d532f429afa8f367707b3b2a080fc57c21bb5bd118ce97e290419",
+  "kind": "config-snapshot",
+  "target": {
+    "platform": "shared-hosting",
+    "components": [
+      "db-server"
+    ],
+    "environment": "prod"
+  },
+  "mentions": [
+    "notes"
+  ],
+  "controls": [
+    "AC-6"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "evidence-manifest/v1",
+  "tool": "powerpipe",
+  "toolVersion": "v1.2.0",
+  "generatedAt": "2026-02-01T06:00:00Z",
+  "artifactPath": "platform-benchmark.json",
+  "sha256": "fb6b6a57d5f1f8bcad2756ab84befc4f5a3e3202a93d67d0bb8f6d1a823cb01e",
+  "kind": "benchmark",
+  "target": {
+    "platform": "shared-hosting",
+    "environment": "prod"
+  },
+  "mentions": [],
+  "controls": [
+    "AC-2",
+    "AU-2",
+    "CP-9"
+  ]
+}

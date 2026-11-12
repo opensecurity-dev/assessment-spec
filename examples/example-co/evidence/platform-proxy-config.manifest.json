@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "evidence-manifest/v1",
+  "tool": "proxy-config-export",
+  "toolVersion": "v1.0.0",
+  "generatedAt": "2026-02-01T06:00:00Z",
+  "artifactPath": "platform-proxy-config.txt",
+  "sha256": "41769f29a3aeffb99b9782f64d59dbf5b2203a249b448716a0e7a4fc143dd9b3",
+  "kind": "config-snapshot",
+  "target": {
+    "platform": "shared-hosting",
+    "components": [
+      "web-proxy"
+    ],
+    "environment": "prod"
+  },
+  "mentions": [
+    "notes",
+    "ledger"
+  ],
+  "controls": [
+    "SC-7",
+    "SC-8"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "system": "notes",
+  "audience": "nda",
+  "platforms": [
+    "shared-hosting"
+  ],
+  "providers": [
+    "example-cloud",
+    "example-cdn",
+    "example-git"
+  ],
+  "included": [
+    {
+      "manifest": "notes-govulncheck.manifest.json",
+      "tool": "govulncheck",
+      "via": "system"
+    },
+    {
+      "manifest": "platform-benchmark.manifest.json",
+      "tool": "powerpipe",
+      "via": "platform:shared-hosting"
+    },
+    {
+      "manifest": "platform-db-roles.manifest.json",
+      "tool": "db-role-export",
+      "via": "platform:shared-hosting"
+    }
+  ],
+  "withheld": [
+    {
+      "manifest": "platform-host-scan.manifest.json",
+      "tool": "oscap",
+      "via": "platform:shared-hosting",
+      "reason": "mentions-undeclared",
+      "detail": "platform artifact does not declare which systems it names"
+    },
+    {
+      "manifest": "platform-proxy-config.manifest.json",
+      "tool": "proxy-config-export",
+      "via": "platform:shared-hosting",
+      "reason": "names-other-systems",
+      "detail": "names ledger"
+    }
+  ]
+}

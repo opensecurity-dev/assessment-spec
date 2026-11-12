@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "evidence-manifest/v1",
+  "tool": "oscap",
+  "toolVersion": "1.4.0",
+  "generatedAt": "2026-02-01T06:00:00Z",
+  "artifactPath": "platform-host-scan.json",
+  "sha256": "7a9ee2f0b8acb1334e05f6312648e17ec79309cc316c120bd3a94224add31902",
+  "kind": "benchmark",
+  "target": {
+    "platform": "shared-hosting",
+    "components": [
+      "host-1"
+    ],
+    "environment": "prod"
+  },
+  "controls": [
+    "CM-6",
+    "CM-7"
+  ]
+}
