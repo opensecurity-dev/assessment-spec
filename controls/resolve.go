@@ -126,7 +126,7 @@ func Resolve(s *scope.Scope, d *Document, view *scope.View, baseline []string) (
 
 	ids := slices.Clone(baseline)
 	ids = append(ids, sys.AddedControls...)
-	sortControls(ids)
+	SortControlIDs(ids)
 	ids = slices.Compact(ids)
 
 	out := &Resolution{System: sys.ID, Audience: view.Audience, Summary: map[Status]int{}, Controls: []Resolved{}}
@@ -319,8 +319,10 @@ func strength(s Status) int {
 	return 0
 }
 
-// sortControls orders control IDs by family, number and enhancement.
-func sortControls(ids []string) {
+// SortControlIDs orders control IDs by family, number and enhancement, so
+// AC-2 precedes AC-2(1), which precedes AC-10. The IDs must be valid control
+// IDs; see ValidControlID.
+func SortControlIDs(ids []string) {
 	sort.Slice(ids, func(i, j int) bool {
 		fi, ni, ei := splitControl(ids[i])
 		fj, nj, ej := splitControl(ids[j])

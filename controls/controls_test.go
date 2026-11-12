@@ -388,3 +388,12 @@ func TestLoadBaseline(t *testing.T) {
 		}
 	}
 }
+
+func TestSortControlIDs(t *testing.T) {
+	ids := []string{"SC-7(5)", "AC-10", "SC-7", "AC-2(1)", "AC-2"}
+	controls.SortControlIDs(ids)
+	want := []string{"AC-2", "AC-2(1)", "AC-10", "SC-7", "SC-7(5)"}
+	if !slices.Equal(ids, want) {
+		t.Errorf("got %v, want %v", ids, want)
+	}
+}
