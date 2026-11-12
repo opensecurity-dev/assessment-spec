@@ -53,7 +53,7 @@ collector and never edited.
 | `kind` | no | `sbom`, `vex`, `findings`, `scan-report`, `config-snapshot`, `benchmark`, `attestation`, `other` |
 | `mediaType` | no | e.g. `application/vnd.cyclonedx+json` |
 | `target` | no | `system` or `platform` ID, `components`, `revision`, `environment` |
-| `mentions` | no | IDs of systems whose names appear in the artifact's content |
+| `mentions` | no | IDs of systems whose names appear in the artifact's content; `[]` declares none, absence declares nothing |
 | `controls` | no | Control IDs the artifact supports, as a hint; engines decide |
 
 The four required fields are the fields existing collectors already write;
@@ -131,11 +131,21 @@ apply to a system:
 2. artifacts whose `target` is a platform the system runs on;
 3. provider attestations for those platforms.
 
-For `public` and `nda`, any artifact whose `mentions` names another system is
-excluded and listed in the view's `withheld` set with the reason, so a
-reviewer can supply a redacted artifact or a written claim instead. `internal`
-includes everything. An artifact with no `mentions` field is treated as naming
-no system; collectors of platform-wide artifacts are expected to set it.
+For `public` and `nda`, an artifact is excluded and listed in the view's
+`withheld` set with the reason, so a reviewer can supply a redacted artifact
+or a written claim instead, when:
+
+- its `mentions` names another system (`names-other-systems`); or
+- it targets a platform and has no `mentions` field at all
+  (`mentions-undeclared`). A platform-wide artifact may name every system on
+  the platform, so silence is not taken as "names none". An explicit empty
+  list declares that it names none; the field uses `omitzero` so that Go
+  writers keep the distinction.
+
+`internal` includes every applicable artifact. Artifacts with no target apply
+to no system and appear in no view. A view is built only from evidence that
+passes `CheckEvidence`: targets name known systems or platforms, components
+belong to their target, and mentions name known systems.
 
 ## 5. Control records
 
@@ -190,6 +200,9 @@ sources, recording the source.
 
 | Decision | Options | Needed by |
 |---|---|---|
-| `mentions` when absent on a platform artifact | Treat as naming no system (lenient), or withhold from public views until set (strict) | `RMI-ASSESSMENTSPEC-007` |
 | Attestation verification levels | Reuse `security-docs-spec` levels, or define a smaller set here | `RMI-ASSESSMENTSPEC-011` |
 | OSCAL export scope | Component definitions only, or also assessment results and POA&M | `RMI-ASSESSMENTSPEC-016` |
+
+Decided: a platform artifact without `mentions` is withheld from external
+views (strict), with the reason, until its collector declares what it names
+(§4).

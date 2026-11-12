@@ -35,10 +35,13 @@ Early development. Available now:
 
 - **`evidence`:** the evidence manifest, set loading, SHA-256 verification and
   freshness (artifact age and vulnerability-database age, per tool).
-- **`schema`:** the generated, embedded evidence manifest schema.
+- **`scope`:** the scope document (providers, shared platforms, systems),
+  validation of it and of evidence against it, and per-system views for each
+  audience.
+- **`audience`:** public, NDA and internal.
+- **`schema`:** the generated, embedded evidence manifest and scope schemas.
 
-Scope and per-system views, control records with inheritance, crosswalks and
-an OSCAL export follow; see the
+Control records with inheritance, crosswalks and an OSCAL export follow; see the
 [roadmap](docs/specs/initiatives/INIT-ASSESSMENTSPEC-001/ROADMAP.md).
 
 ## Evidence manifest
@@ -83,6 +86,31 @@ if !report.OK() {
 A scan run with an out-of-date vulnerability database is stale even when the
 scan itself is new.
 
+## Several products on one platform
+
+A scope document declares the shared platform once and each product as a
+system on it. `NewView` returns, for one system and one audience, the
+evidence about that system and its platforms. For a public or NDA audience it
+withholds, with the reason, any artifact that names another system, and any
+platform artifact whose collector has not declared which systems it names:
+
+```go
+s, err := scope.Load("scope.json")
+if err != nil {
+	return err
+}
+view, err := s.NewView(set, "notes", audience.Public)
+if err != nil {
+	return err
+}
+for _, w := range view.Withheld {
+	fmt.Println(w.Manifest, w.Reason, w.Detail) // platform-proxy-config.manifest.json names-other-systems names ledger
+}
+```
+
+[`examples/example-co`](examples/example-co) has one platform, two systems
+and seven artifacts, with every system's view for every audience.
+
 ## Specifications
 
 - [PRD](docs/specs/initiatives/INIT-ASSESSMENTSPEC-001/PRD.md)
@@ -96,7 +124,9 @@ scan itself is new.
 go test ./...
 golangci-lint run
 go generate ./schema
+go test ./scope -update    # after a deliberate change to the example views
 schemakit lint --property-case camelCase schema/evidence-manifest.schema.json
+schemakit lint --property-case camelCase schema/scope.schema.json
 ```
 
 ## License
