@@ -10,7 +10,7 @@
   "releases": [
     {
       "version": "v0.1.0",
-      "date": "2026-11-12",
+      "date": "2026-11-13",
       "highlights": [
         {
           "description": "A framework-neutral format for assessment records: evidence manifests, a scope of providers, shared platforms and products, control implementation records, and crosswalks"
