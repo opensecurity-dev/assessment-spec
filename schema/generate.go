@@ -3,6 +3,8 @@ package schema
 import (
 	"encoding/json"
 	"fmt"
+	"path"
+	"path/filepath"
 
 	"github.com/invopop/jsonschema"
 
@@ -66,6 +68,7 @@ func generate(v any, srcDir, file, title, description string) ([]byte, error) {
 	if err := r.AddGoComments("github.com/opensecurity-dev/assessment-spec/schema", srcDir); err != nil {
 		return nil, fmt.Errorf("schema: read Go comments for %s: %w", file, err)
 	}
+	r.CommentMap = slashKeys(r.CommentMap)
 	s := r.Reflect(v)
 	s.ID = jsonschema.ID(BaseID + file)
 	s.Title = title
@@ -75,4 +78,15 @@ func generate(v any, srcDir, file, title, description string) ([]byte, error) {
 		return nil, fmt.Errorf("schema: encode %s: %w", file, err)
 	}
 	return append(b, '\n'), nil
+}
+
+// slashKeys rewrites comment keys to slash-separated, clean package paths.
+// AddGoComments joins the base with an OS-specific directory, so on Windows
+// its keys hold backslashes and match no type.
+func slashKeys(m map[string]string) map[string]string {
+	out := make(map[string]string, len(m))
+	for k, v := range m {
+		out[path.Clean(filepath.ToSlash(k))] = v
+	}
+	return out
 }
